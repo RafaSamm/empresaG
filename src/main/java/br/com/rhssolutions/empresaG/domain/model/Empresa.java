@@ -1,12 +1,14 @@
 package br.com.rhssolutions.empresaG.domain.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
 import java.io.Serializable;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
-@Entity
+@Entity(name = "empresas")
 @Data
 public class Empresa implements Serializable {
 
@@ -17,9 +19,10 @@ public class Empresa implements Serializable {
     @Column(nullable = false)
     private String nome;
 
-    @Column(nullable = false, unique = true)
+    @Column(unique = true)
     private String cnpj;
 
-    @OneToMany(mappedBy = "empresa", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private Set<Departamento> departamentos;
+   // @JsonIgnore
+    @OneToMany(mappedBy = "empresa", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Departamento> departamentos = new ArrayList<>();
 }

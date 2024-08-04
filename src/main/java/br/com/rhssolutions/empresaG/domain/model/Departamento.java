@@ -1,11 +1,14 @@
 package br.com.rhssolutions.empresaG.domain.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 
-@Entity
+@Entity(name = "departamentos")
 @Data
 public class Departamento implements Serializable {
 
@@ -13,10 +16,13 @@ public class Departamento implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
     private String nome;
 
+    @Column(columnDefinition = "TEXT")
+    private String descricao;
+
+    @JsonIgnore
     @ManyToOne
-    @JoinColumn(name = "empresa_id", nullable = false)
+    @JoinColumn(name = "empresa_id")
     private Empresa empresa;
 }
