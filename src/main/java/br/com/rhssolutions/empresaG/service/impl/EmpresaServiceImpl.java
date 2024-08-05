@@ -1,19 +1,15 @@
 package br.com.rhssolutions.empresaG.service.impl;
 
-import br.com.rhssolutions.empresaG.domain.model.Departamento;
 import br.com.rhssolutions.empresaG.domain.model.Empresa;
 import br.com.rhssolutions.empresaG.domain.repository.EmpresaRepository;
 import br.com.rhssolutions.empresaG.service.EmpresaService;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Optional;
-
 @Service
 public class EmpresaServiceImpl implements EmpresaService {
 
     private final EmpresaRepository empresaRepository;
+
 
     public EmpresaServiceImpl(EmpresaRepository empresaRepository) {
         this.empresaRepository = empresaRepository;
@@ -21,12 +17,11 @@ public class EmpresaServiceImpl implements EmpresaService {
 
 
     @Override
-    public Empresa criarEmpresa(Empresa empresa, Departamento departamento) {
+    public Empresa criarEmpresa(Empresa empresa) {
         var empresaExistente = empresaRepository.existsByCnpj((empresa.getCnpj()));
         if (empresaExistente) {
             throw new IllegalArgumentException("Empresa já existe com este CNPJ");
         } else {
-            empresa.getDepartamentos().add(departamento);
             return empresaRepository.save(empresa);
         }
     }

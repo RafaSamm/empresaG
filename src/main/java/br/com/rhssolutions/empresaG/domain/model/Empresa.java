@@ -22,7 +22,6 @@ public class Empresa implements Serializable {
     @Column(unique = true)
     private String cnpj;
 
-   // @JsonIgnore
     @OneToMany(mappedBy = "empresa", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Departamento> departamentos = new ArrayList<>();
 }
