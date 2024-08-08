@@ -1,7 +1,6 @@
 package br.com.rhssolutions.empresaG.service.impl;
 
 import br.com.rhssolutions.empresaG.domain.model.Departamento;
-import br.com.rhssolutions.empresaG.domain.model.Empresa;
 import br.com.rhssolutions.empresaG.domain.repository.DepartamentoRepository;
 import br.com.rhssolutions.empresaG.domain.repository.EmpresaRepository;
 import br.com.rhssolutions.empresaG.service.DepartamentoService;
@@ -20,16 +19,14 @@ public class DepartamentoServiceImpl implements DepartamentoService {
     }
 
 
-//    @Override
-//    @Transactional
-//    public Departamento criarDepartamento(Departamento departamento) {
-//        var departamentoExistente = departamentoRepository.existsByNome(departamento.getNome());
-//        if (departamentoExistente) {
-//            throw new IllegalArgumentException("Departamento já existe");
-//        } else {
-//            return departamentoRepository.save(departamento);
-//        }
-//    }
+    @Override
+    @Transactional
+    public Departamento criarDepartamento(Long empresaId, Departamento departamento) {
+        var empresa = empresaRepository.findById(empresaId).orElseThrow(()
+                -> new RuntimeException("Empresa não encontrada"));
+        departamento.setEmpresa(empresa);
+        return departamentoRepository.save(departamento);
+    }
 
     @Override
     public Departamento buscarDepartamento(Long id) {
@@ -56,17 +53,6 @@ public class DepartamentoServiceImpl implements DepartamentoService {
             throw new RuntimeException("Departamento não encontrado");
         }
         return null;
-    }
-
-    @Override
-    @Transactional
-    public Departamento adicionarDepartamentoNaEmpresa(Long empresaId, Departamento departamento) {
-        var empresa = empresaRepository.findById(empresaId)
-                .orElseThrow(() -> new RuntimeException("Empresa não encontrada"));
-        departamento.setNome(departamento.getNome());
-        departamento.setDescricao(departamento.getDescricao());
-        departamento.setEmpresa(empresa);
-        return departamentoRepository.save(departamento);
     }
 
 

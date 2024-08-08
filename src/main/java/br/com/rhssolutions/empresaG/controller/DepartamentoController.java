@@ -21,11 +21,11 @@ public class DepartamentoController {
         return ResponseEntity.ok(departamento);
     }
 
-//    @PostMapping("/criar")
-//    public ResponseEntity<Departamento> criarDepartamento(@RequestBody Departamento departamento) {
-//        var novoDepartamento = departamentoService.criarDepartamento(departamento);
-//        return ResponseEntity.ok(novoDepartamento);
-//    }
+    @PostMapping("/criar/empresa/{empresaId}")
+    public ResponseEntity<Departamento> criarDepartamento(@PathVariable Long empresaId, @RequestBody Departamento departamento) {
+        var departamentoCriado = departamentoService.criarDepartamento(empresaId, departamento);
+        return ResponseEntity.ok(departamentoCriado);
+    }
 
     @PutMapping("/atualizar/{id}")
     public ResponseEntity<Departamento> atualizarDepartamento(@PathVariable Long id, @RequestBody Departamento departamento) {

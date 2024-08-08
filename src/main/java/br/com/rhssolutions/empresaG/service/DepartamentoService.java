@@ -3,7 +3,7 @@ package br.com.rhssolutions.empresaG.service;
 import br.com.rhssolutions.empresaG.domain.model.Departamento;
 
 public interface DepartamentoService {
-    //Departamento criarDepartamento(Departamento departamento);
+    Departamento criarDepartamento(Long empresaId, Departamento departamento);
 
     Departamento buscarDepartamento(Long id);
 
@@ -11,5 +11,4 @@ public interface DepartamentoService {
 
     Departamento deletarDepartamento(Long id);
 
-    Departamento adicionarDepartamentoNaEmpresa(Long empresaId, Departamento departamento);
 }

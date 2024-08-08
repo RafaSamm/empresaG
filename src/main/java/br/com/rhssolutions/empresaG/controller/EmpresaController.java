@@ -37,12 +37,4 @@ public class EmpresaController {
         return ResponseEntity.ok(empresa);
     }
 
-
-    @PostMapping("/{empresaId}/departamento")
-    public ResponseEntity<Departamento> adicionarDepartamentoNaEmpresa(@PathVariable Long empresaId, @RequestBody Departamento departamento) {
-        var departamentoAdicionado = departamentoService.adicionarDepartamentoNaEmpresa(empresaId, departamento);
-        return ResponseEntity.ok(departamentoAdicionado);
-    }
-
-
 }

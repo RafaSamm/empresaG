@@ -1,6 +1,6 @@
 package br.com.rhssolutions.empresaG.domain.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -19,7 +19,7 @@ public class Departamento implements Serializable {
     @Column(columnDefinition = "TEXT")
     private String descricao;
 
-    @JsonIgnore
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @ManyToOne
     @JoinColumn(name = "empresa_id", nullable = false, updatable = false)
     private Empresa empresa;
