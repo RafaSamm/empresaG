@@ -24,8 +24,14 @@ public class DepartamentoServiceImpl implements DepartamentoService {
     public Departamento criarDepartamento(Long empresaId, Departamento departamento) {
         var empresa = empresaRepository.findById(empresaId).orElseThrow(()
                 -> new RuntimeException("Empresa não encontrada"));
-        departamento.setEmpresa(empresa);
-        return departamentoRepository.save(departamento);
+        
+        var departamentoExistente = departamentoRepository.existsByNome(departamento.getNome());
+        if (departamentoExistente) {
+            throw new IllegalArgumentException("Departamento já existe");
+        } else {
+            departamento.setEmpresa(empresa);
+            return departamentoRepository.save(departamento);
+        }
     }
 
     @Override
