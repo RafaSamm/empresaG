@@ -17,7 +17,7 @@ public class DepartamentoController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Departamento> buscarDepartamentoPorId(@PathVariable Long id) {
-        var departamento = departamentoService.buscarDepartamento(id);
+        var departamento = departamentoService.buscarDepartamentoPorId(id);
         return ResponseEntity.ok(departamento);
     }
 

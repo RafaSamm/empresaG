@@ -42,4 +42,13 @@ public class EmpresaServiceImpl implements EmpresaService {
         return null;
     }
 
+    @Override
+    public Iterable<Empresa> buscarTodasEmpresas() {
+        if (empresaRepository.findAll().isEmpty()) {
+            throw new RuntimeException("Não há empresas cadastradas");
+        } else {
+            return empresaRepository.findAll();
+        }
+    }
+
 }

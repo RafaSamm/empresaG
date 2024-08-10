@@ -24,7 +24,7 @@ public class DepartamentoServiceImpl implements DepartamentoService {
     public Departamento criarDepartamento(Long empresaId, Departamento departamento) {
         var empresa = empresaRepository.findById(empresaId).orElseThrow(()
                 -> new RuntimeException("Empresa não encontrada"));
-        
+
         var departamentoExistente = departamentoRepository.existsByNome(departamento.getNome());
         if (departamentoExistente) {
             throw new IllegalArgumentException("Departamento já existe");
@@ -35,11 +35,12 @@ public class DepartamentoServiceImpl implements DepartamentoService {
     }
 
     @Override
-    public Departamento buscarDepartamento(Long id) {
+    public Departamento buscarDepartamentoPorId(Long id) {
         return departamentoRepository.findById(id).orElseThrow(()
                 -> new RuntimeException("Departamento não encontrado"));
 
     }
+
 
     @Override
     @Transactional

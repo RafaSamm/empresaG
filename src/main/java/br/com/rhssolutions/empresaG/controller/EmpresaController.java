@@ -37,4 +37,10 @@ public class EmpresaController {
         return ResponseEntity.ok(empresa);
     }
 
+    @GetMapping
+    public ResponseEntity<Iterable<Empresa>> buscarTodasEmpresas() {
+        var empresas = empresaService.buscarTodasEmpresas();
+        return ResponseEntity.ok(empresas);
+    }
+
 }

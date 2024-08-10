@@ -9,4 +9,6 @@ public interface EmpresaService {
 
     Empresa deletarEmpresaPorId(Long id);
 
+    Iterable<Empresa> buscarTodasEmpresas();
+
 }
