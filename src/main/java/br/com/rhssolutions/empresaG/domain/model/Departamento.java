@@ -20,7 +20,7 @@ public class Departamento implements Serializable {
     private String descricao;
 
     @ManyToOne
-    @JoinColumn(name = "empresa_id", nullable = false, updatable = false)
+    @JoinColumn(name = "empresa_id")
     private Empresa empresa;
 
     @CreationTimestamp

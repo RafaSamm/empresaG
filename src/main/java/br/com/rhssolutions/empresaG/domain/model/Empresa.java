@@ -1,9 +1,10 @@
 package br.com.rhssolutions.empresaG.domain.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
+
+import jakarta.persistence.CascadeType;
 
 import java.io.Serializable;
 import java.util.HashSet;
@@ -26,8 +27,7 @@ public class Empresa implements Serializable {
     @Embedded
     private EnderecoEmpresa endereco;
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "empresa", fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(mappedBy = "empresa", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Departamento> departamentos = new HashSet<>();
 
     @CreationTimestamp
