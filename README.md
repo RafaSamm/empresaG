@@ -17,7 +17,7 @@ classDiagram
         +String cnpj
         +String dataCriacaoEmpresa
     }
-    class Endereco {   
+    class EnderecoEmpresa {   
         +String rua
         +int numero
         +String bairro
@@ -30,9 +30,30 @@ classDiagram
         + String nome
         + String descricao
     }
+    class Funcionario {
+        + String nome
+        + String cpf
+        + String email
+        + String telefone
+        + String inicioDataCadastro
+        + String fimDataCadastro
+    }
+     class EnderecoFuncionario {   
+        +String rua
+        +int numero
+        +String complemento
+        +String bairro
+        +String cidade
+        +String estado
+        +String cep
+        +String pais
+    }
 
-    Empresa "1" *-- "1" Endereco
+    Empresa "1" *-- "1" EnderecoEmpresa
     Empresa "1" *-- "N" Departamento
+    Empresa "1" *-- "N" Funcionario
+    Departamento "1" *-- "N" Funcionario
+    Funcionario "1" *-- "1" EnderecoFuncionario
 
 ```
 
