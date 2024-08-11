@@ -1,5 +1,6 @@
 <h1 align="center">EMPRESAG</h1>
-<p align="center">Projeto destinado a área empresarial</p>
+<p align="center">Projeto destinado a área empresarial - versão 1.0.0</p>
+
 
 ## TECNOLOGIAS E FERRAMENTAS
 <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/java/java-original-wordmark.svg" width="50" height="50" /><img 
