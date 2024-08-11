@@ -1,6 +1,6 @@
 package br.com.rhssolutions.empresaG.service.impl;
 
-import br.com.rhssolutions.empresaG.domain.model.Departamento;
+import br.com.rhssolutions.empresaG.domain.model.departamento.Departamento;
 import br.com.rhssolutions.empresaG.domain.repository.DepartamentoRepository;
 import br.com.rhssolutions.empresaG.domain.repository.EmpresaRepository;
 import br.com.rhssolutions.empresaG.service.DepartamentoService;

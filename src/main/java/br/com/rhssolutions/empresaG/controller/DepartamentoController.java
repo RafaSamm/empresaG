@@ -1,6 +1,6 @@
 package br.com.rhssolutions.empresaG.controller;
 
-import br.com.rhssolutions.empresaG.domain.model.Departamento;
+import br.com.rhssolutions.empresaG.domain.model.departamento.Departamento;
 import br.com.rhssolutions.empresaG.service.DepartamentoService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

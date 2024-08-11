@@ -1,6 +1,6 @@
 package br.com.rhssolutions.empresaG.service.impl;
 
-import br.com.rhssolutions.empresaG.domain.model.Empresa;
+import br.com.rhssolutions.empresaG.domain.model.empresa.Empresa;
 import br.com.rhssolutions.empresaG.domain.repository.EmpresaRepository;
 import br.com.rhssolutions.empresaG.service.EmpresaService;
 import org.springframework.stereotype.Service;

@@ -1,6 +1,6 @@
 package br.com.rhssolutions.empresaG.domain.repository;
 
-import br.com.rhssolutions.empresaG.domain.model.Empresa;
+import br.com.rhssolutions.empresaG.domain.model.empresa.Empresa;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 

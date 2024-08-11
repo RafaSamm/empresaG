@@ -1,7 +1,6 @@
 package br.com.rhssolutions.empresaG.controller;
 
-import br.com.rhssolutions.empresaG.domain.model.Departamento;
-import br.com.rhssolutions.empresaG.domain.model.Empresa;
+import br.com.rhssolutions.empresaG.domain.model.empresa.Empresa;
 import br.com.rhssolutions.empresaG.service.DepartamentoService;
 import br.com.rhssolutions.empresaG.service.EmpresaService;
 import org.springframework.http.ResponseEntity;

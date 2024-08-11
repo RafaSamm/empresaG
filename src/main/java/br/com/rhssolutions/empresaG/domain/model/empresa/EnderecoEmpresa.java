@@ -1,4 +1,4 @@
-package br.com.rhssolutions.empresaG.domain.model;
+package br.com.rhssolutions.empresaG.domain.model.empresa;
 
 import br.com.rhssolutions.empresaG.domain.model.exception.CepNotFoundException;
 import jakarta.persistence.*;

@@ -1,6 +1,6 @@
 package br.com.rhssolutions.empresaG.service;
 
-import br.com.rhssolutions.empresaG.domain.model.Empresa;
+import br.com.rhssolutions.empresaG.domain.model.empresa.Empresa;
 
 public interface EmpresaService {
     Empresa criarEmpresa(Empresa empresa);

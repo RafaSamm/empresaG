@@ -1,5 +1,6 @@
-package br.com.rhssolutions.empresaG.domain.model;
+package br.com.rhssolutions.empresaG.domain.model.departamento;
 
+import br.com.rhssolutions.empresaG.domain.model.empresa.Empresa;
 import jakarta.persistence.*;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
