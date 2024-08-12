@@ -35,6 +35,7 @@ classDiagram
         + String cpf
         + String email
         + String telefone
+        + Double salario
         + String inicioDataCadastro
         + String fimDataCadastro
     }
