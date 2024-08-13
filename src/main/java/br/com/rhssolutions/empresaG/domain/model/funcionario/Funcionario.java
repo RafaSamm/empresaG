@@ -1,12 +1,16 @@
 package br.com.rhssolutions.empresaG.domain.model.funcionario;
 
+import br.com.rhssolutions.empresaG.domain.model.empresa.Empresa;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 @Entity(name = "funcionarios")
 @Data
-
 public class Funcionario {
 
     @Id
@@ -25,19 +29,22 @@ public class Funcionario {
     @Column(nullable = false)
     private String telefone;
 
+    @Column(nullable = false)
+    private Double salario;
+
     @Embedded
     private EnderecoFuncionario endereco;
 
 
     //  private Departamento departamento;
 
-    //  private Empresa empresa;
+    @ManyToOne
+    @JoinColumn(name = "empresa_id")
+    private Empresa empresa;
 
-    @DateTimeFormat(pattern = "dd/MM/yyyy")
     @Column(name = "inicio_data_cadastro", nullable = false, updatable = false)
-    private String InicioDataCadastro;
+    private LocalDateTime inicioDataCadastro;
 
-    @DateTimeFormat(pattern = "dd/MM/yyyy")
     @Column(name = "fim_data_cadastro", nullable = false, updatable = false)
-    private String fimDataCadastro;
+    private LocalDateTime fimDataCadastro;
 }

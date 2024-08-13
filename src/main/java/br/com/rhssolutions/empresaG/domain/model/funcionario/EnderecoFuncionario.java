@@ -22,7 +22,7 @@ import lombok.Data;
 public class EnderecoFuncionario {
 
     private String rua;
-    private String numero;
+    private Integer numero;
     private String complemento;
     private String bairro;
     private String cidade;

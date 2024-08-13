@@ -1,6 +1,8 @@
 package br.com.rhssolutions.empresaG.domain.model.empresa;
 
 import br.com.rhssolutions.empresaG.domain.model.departamento.Departamento;
+import br.com.rhssolutions.empresaG.domain.model.funcionario.Funcionario;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
@@ -28,11 +30,13 @@ public class Empresa implements Serializable {
     @Embedded
     private EnderecoEmpresa endereco;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "empresa", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Departamento> departamentos = new HashSet<>();
 
-//    @OneToMany(mappedBy = "empresa", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-//    private Set<Funcionario> funcionarios = new HashSet<>();
+    @JsonIgnore
+    @OneToMany(mappedBy = "empresa", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<Funcionario> funcionarios = new HashSet<>();
 
     @CreationTimestamp
     @Column(name = "data_criacao_empresa", nullable = false, updatable = false)
