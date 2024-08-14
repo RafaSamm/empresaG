@@ -45,8 +45,8 @@ classDiagram
         -email: String
         -telefone: String
         -salario: Double
-        -inicioDataCadastro: LocalDateTime
-        -fimDataCadastro: LocalDateTime
+        -inicioDataCadastro: Date
+        -fimDataCadastro: Date
         +salvarFuncionario(empresaId: Long, funcionario: Funcionario) Funcionario
         +buscarPorId(id: Long) Funcionario
         +atualizarFuncionario(id: Long, funcionario: Funcionario) Funcionario
