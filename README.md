@@ -13,54 +13,54 @@ src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/swagger/swagger-p
 ```mermaid
 classDiagram
     class Empresa {
-        -String nome
-        -String cnpj
-        -String dataCriacaoEmpresa
-        +criarEmpresa(Empresa empresa)
-        +buscarEmpresaPorId(Long id)
-        +deletarEmpresaPorId(Long id)
-        +buscarTodasEmpresas()
+        -nome: String
+        -cnpj: String
+        -dataCriacaoEmpresa: String
+        +criarEmpresa(empresa: Empresa) Empresa
+        +buscarEmpresaPorId(id: Long) Empresa
+        +deletarEmpresaPorId(id: Long) Empresa
+        +buscarTodasEmpresas() Empresa
         
     }
     class EnderecoEmpresa {   
-        -String rua
-        -int numero
-        -String bairro
-        -String cidade
-        -String estado
-        -String cep
-        -String pais
+        -rua: String
+        -numero: Integer
+        -bairro: String
+        -cidade: String
+        -estado: String
+        -cep: String
+        -pais: String
     }
     class Departamento {
-        -String nome
-        -String descricao
-        +criarDepartamento(Long empresaId, Departamento departamento)
-        +buscarDepartamento(Long id)
-        +atualizarDepartamento(Long id, Departamento departamento)
-        +deletarDepartamento(Long id)
+        -nome: String
+        -descricao: String
+        +criarDepartamento(empresaId: Long, departamento: Departamento) Departamento
+        +buscarDepartamentoPorId(id: Long) Departamento
+        +atualizarDepartamento(id: Long, departamento: Departamento) Departamento
+        +deletarDepartamento(id: Long) Departamento
     }
     class Funcionario {
-        -String nome
-        -String cpf
-        -String email
-        -String telefone
-        -Double salario
-        -String inicioDataCadastro
-        -String fimDataCadastro
-        +salvarFuncionario(Long empresaId, Funcionario funcionario)
-        +buscarPorId(Long id)
-        +atualizarFuncionario(Long id, Funcionario funcionario)
-        +deletarFuncionario(Long id)    
+        -nome: String
+        -cpf: String
+        -email: String
+        -telefone: String
+        -salario: Double
+        -inicioDataCadastro: LocalDateTime
+        -fimDataCadastro: LocalDateTime
+        +salvarFuncionario(empresaId: Long, funcionario: Funcionario) Funcionario
+        +buscarPorId(id: Long) Funcionario
+        +atualizarFuncionario(id: Long, funcionario: Funcionario) Funcionario
+        +deletarFuncionario(id: Long) Void    
     }
      class EnderecoFuncionario {   
-        -String rua
-        -int numero
-        -String complemento
-        -String bairro
-        -String cidade
-        -String estado
-        -String cep
-        -String pais
+        -rua: String
+        -numero: Integer
+        -complemento: String
+        -bairro: String
+        -cidade: String
+        -estado: String
+        -cep: String
+        -pais: String
     }
 
     Empresa "1" *-- "1" EnderecoEmpresa
