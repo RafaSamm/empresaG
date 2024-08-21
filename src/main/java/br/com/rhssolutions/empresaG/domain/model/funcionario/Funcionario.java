@@ -1,40 +1,24 @@
 package br.com.rhssolutions.empresaG.domain.model.funcionario;
 
 import br.com.rhssolutions.empresaG.domain.model.empresa.Empresa;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.Data;
-import org.springframework.format.annotation.DateTimeFormat;
+import lombok.EqualsAndHashCode;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity(name = "funcionarios")
 @Data
-public class Funcionario {
+@EqualsAndHashCode(callSuper = true)
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+public class Funcionario extends Pessoa {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(nullable = false)
-    private String nome;
-
-    @Column(nullable = false, unique = true, length = 11)
-    private String cpf;
-
-    @Column(nullable = false, unique = true)
-    private String email;
-
-    @Column(nullable = false)
-    private String telefone;
-
-    @Column(nullable = false)
     private Double salario;
-
-    @Embedded
-    private EnderecoFuncionario endereco;
-
 
     //  private Departamento departamento;
 

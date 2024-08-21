@@ -19,7 +19,7 @@ import lombok.Data;
         @AttributeOverride(name = "pais", column = @Column(name = "país"))
 })
 
-public class EnderecoFuncionario {
+public class Endereco {
 
     private String rua;
     private Integer numero;

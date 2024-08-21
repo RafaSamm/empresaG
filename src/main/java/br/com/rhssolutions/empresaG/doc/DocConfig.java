@@ -25,8 +25,6 @@ public class DocConfig {
                                 .url("http://localhost:8080")
                                 .description("Servidor Local")
                 ));
-
-
     }
 
     @Bean
