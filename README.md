@@ -40,10 +40,6 @@ classDiagram
         +deletarDepartamento(id: Long) Departamento
     }
     class Funcionario {
-        -nome: String
-        -cpf: String
-        -email: String
-        -telefone: String
         -salario: Double
         -inicioDataCadastro: Date
         -fimDataCadastro: Date
@@ -52,7 +48,15 @@ classDiagram
         +atualizarFuncionario(id: Long, funcionario: Funcionario) Funcionario
         +deletarFuncionario(id: Long) Void    
     }
-     class EnderecoFuncionario {   
+    class Pessoa {
+        -nome: String
+        -cpf: String
+        -dataNascimento: Date
+        -email: String
+        -telefone: String
+    }
+
+     class Endereco {   
         -rua: String
         -numero: Integer
         -complemento: String
@@ -67,7 +71,8 @@ classDiagram
     Empresa "1" *-- "N" Departamento
     Empresa "1" *-- "N" Funcionario
     Departamento "1" *-- "N" Funcionario
-    Funcionario "1" *-- "1" EnderecoFuncionario
+    Pessoa "1" *-- "1" Endereco
+    Funcionario <|-- Pessoa
 
 ```
 
