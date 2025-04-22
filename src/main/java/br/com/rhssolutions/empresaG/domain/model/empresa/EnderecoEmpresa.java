@@ -3,6 +3,7 @@ package br.com.rhssolutions.empresaG.domain.model.empresa;
 import br.com.rhssolutions.empresaG.domain.model.exception.CepNotFoundException;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.RequiredArgsConstructor;
 
 @Data
 @Embeddable
@@ -15,6 +16,7 @@ import lombok.Data;
         @AttributeOverride(name = "cep", column = @Column(name = "cep")),
         @AttributeOverride(name = "pais", column = @Column(name = "país"))
 })
+
 public class EnderecoEmpresa {
 
     private String rua;

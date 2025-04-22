@@ -5,9 +5,8 @@ import br.com.rhssolutions.empresaG.domain.model.funcionario.Funcionario;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.RequiredArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
-
-import jakarta.persistence.CascadeType;
 
 import java.io.Serializable;
 import java.util.HashSet;
@@ -41,4 +40,5 @@ public class Empresa implements Serializable {
     @CreationTimestamp
     @Column(name = "data_criacao_empresa", nullable = false, updatable = false)
     private String dataCriacaoEmpresa;
+
 }
