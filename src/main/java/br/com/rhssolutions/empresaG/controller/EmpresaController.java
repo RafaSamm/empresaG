@@ -20,8 +20,9 @@ public class EmpresaController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Empresa> buscarEmpresa(@PathVariable Long id) {
-        var empresa = empresaService.buscarEmpresaPorId(id);
-        return ResponseEntity.ok(empresa);
+        return empresaService.buscarEmpresaPorId(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 
     @PostMapping("/criar")
@@ -32,8 +33,9 @@ public class EmpresaController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Empresa> deletarEmpresa(@PathVariable Long id) {
-        var empresa = empresaService.deletarEmpresaPorId(id);
-        return ResponseEntity.ok(empresa);
+        empresaService.deletarEmpresaPorId(id);
+        return ResponseEntity.noContent().build();
+
     }
 
     @GetMapping

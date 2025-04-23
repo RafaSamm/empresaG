@@ -1,9 +1,12 @@
 package br.com.rhssolutions.empresaG.service.impl;
 
 import br.com.rhssolutions.empresaG.domain.model.empresa.Empresa;
+import br.com.rhssolutions.empresaG.domain.model.exception.EmpresaNotFoundException;
 import br.com.rhssolutions.empresaG.domain.repository.EmpresaRepository;
 import br.com.rhssolutions.empresaG.service.EmpresaService;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 public class EmpresaServiceImpl implements EmpresaService {
@@ -27,25 +30,21 @@ public class EmpresaServiceImpl implements EmpresaService {
     }
 
     @Override
-    public Empresa buscarEmpresaPorId(Long id) {
-        return empresaRepository.findById(id).orElseThrow(()
-                -> new RuntimeException("Empresa não encontrada"));
+    public Optional<Empresa> buscarEmpresaPorId(Long id) {
+        return Optional.ofNullable(empresaRepository.findById(id).orElseThrow(() ->
+                new EmpresaNotFoundException("Empresa não encontrada")));
     }
 
     @Override
-    public Empresa deletarEmpresaPorId(Long id) {
-        if (empresaRepository.existsById(id)) {
-            empresaRepository.deleteById(id);
-        } else {
-            throw new RuntimeException("Empresa não encontrada");
-        }
-        return null;
+    public void deletarEmpresaPorId(Long id) {
+        empresaRepository.delete(empresaRepository.findById(id).orElseThrow(() ->
+                new EmpresaNotFoundException("Empresa não encontrada")));
     }
 
     @Override
     public Iterable<Empresa> buscarTodasEmpresas() {
         if (empresaRepository.findAll().isEmpty()) {
-            throw new RuntimeException("Não há empresas cadastradas");
+            throw new EmpresaNotFoundException("Não há empresas cadastradas");
         } else {
             return empresaRepository.findAll();
         }

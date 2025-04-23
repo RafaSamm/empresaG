@@ -24,8 +24,9 @@ public class EmpresaConstant {
         empresa.setEndereco(endereco);
         return empresa;
     }
-    public static Empresa criarEmpresaInvalido(){
-         var empresa = new Empresa();
+
+    public static Empresa criarEmpresaInvalido() {
+        var empresa = new Empresa();
         empresa.setNome("");
         empresa.setCnpj("");
         var endereco = new EnderecoEmpresa();
