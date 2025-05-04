@@ -7,6 +7,7 @@ import lombok.EqualsAndHashCode;
 
 import java.time.LocalDateTime;
 
+
 @Entity(name = "funcionarios")
 @Data
 @EqualsAndHashCode(callSuper = true)
