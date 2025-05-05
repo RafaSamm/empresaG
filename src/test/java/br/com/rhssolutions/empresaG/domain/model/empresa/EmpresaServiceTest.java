@@ -88,7 +88,9 @@ public class EmpresaServiceTest {
 
         assertThat(empresasList).isNotEmpty();
         assertThat(empresasList).hasSize(1);
-        assertThat(empresasList.getFirst()).isEqualTo(criarEmpresa());
+        assertThat(empresasList.get(0)).isEqualTo(criarEmpresa());
+
+
     }
 
     @Test
