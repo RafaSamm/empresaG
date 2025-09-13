@@ -9,6 +9,81 @@ src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/intellij/intellij
 src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postman/postman-original-wordmark.svg" width="70" height="70" /><img 
 src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/swagger/swagger-plain-wordmark.svg" height="70" width="70" />
 
+## 📂 Estrutura do Projeto
+```
+src/main/java/br/com/rhssolutions/empresaG
+├── controller # Endpoints REST
+├── dto # DTOs (em evolução)
+├── service # Interfaces de serviços
+├── service/impl # Implementações de serviços
+├── domain/model # Entidades do domínio
+├── domain/repository # Interfaces de repositório (Spring Data)
+├── controller/exception# Tratamento global de exceções
+├── doc # Configuração do Swagger/OpenAPI
+└── EmpresaGApplication.java
+```
+
+### Passos
+1. Clone o repositório:
+```bash
+git clone https://github.com/RafaSamm/empresaG.git
+cd empresaG
+```
+
+
+2. Compile e rode a aplicação:
+```bash
+./mvnw spring-boot:run
+```
+ou, se preferir usar Maven instalado globalmente:
+```bash
+mvn spring-boot:run
+```
+
+
+3. Abra no navegador:
+```
+http://localhost:8080
+```
+## 📖 Documentação da API (Swagger)
+Acesse a interface interativa do Swagger:
+```
+http://localhost:8080/swagger-ui/index.html
+```
+### Principais endpoints
+**Empresa**
+- `GET /empresas` — lista todas as empresas
+- `GET /empresas/{id}` — busca por ID
+- `POST /empresas` — cria nova empresa
+- `PUT /empresas/{id}` — atualiza empresa
+- `DELETE /empresas/{id}` — remove empresa
+
+
+**Departamento**
+- `GET /departamentos`
+- `POST /departamentos`
+
+
+**Funcionário**
+- `GET /funcionarios`
+- `POST /funcionarios`
+
+
+## 🧪 Testes
+Execute a suíte de testes (unitários e integração):
+```bash
+./mvnw test
+```
+
+## 🔧 Configurações
+Arquivos de propriedades disponíveis:
+- `application.properties` — configuração padrão (local)
+- `application-test.properties` — configuração para execução de testes
+- `application-prod.properties` — exemplo para produção
+  
+Por padrão, a aplicação pode usar H2 em memória para facilitar desenvolvimento e testes.
+
+
 ## DIAGRAMA DE CLASSES
 ```mermaid
 classDiagram
@@ -74,9 +149,8 @@ classDiagram
     Pessoa "1" *-- "1" Endereco
     Funcionario <|-- Pessoa
 
-
-
 ```
+
 
 
           
