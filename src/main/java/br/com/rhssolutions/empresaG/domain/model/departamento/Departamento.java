@@ -5,11 +5,11 @@ import jakarta.persistence.*;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 
-import java.io.Serializable;
+import java.time.LocalDateTime;
 
 @Entity(name = "departamentos")
 @Data
-public class Departamento implements Serializable {
+public class Departamento {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,5 +26,5 @@ public class Departamento implements Serializable {
 
     @CreationTimestamp
     @Column(name = "data_criacao_departamento", nullable = false, updatable = false)
-    private String dataCriacaoDepartamento;
+    private LocalDateTime dataCriacaoDepartamento;
 }

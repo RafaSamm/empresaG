@@ -5,12 +5,11 @@ import jakarta.persistence.Embedded;
 import jakarta.persistence.MappedSuperclass;
 import lombok.Data;
 
-import java.io.Serializable;
 import java.time.LocalDate;
 
 @Data
 @MappedSuperclass
-public abstract class Pessoa implements Serializable {
+public abstract class Pessoa {
 
     @Column(nullable = false)
     private String nome;

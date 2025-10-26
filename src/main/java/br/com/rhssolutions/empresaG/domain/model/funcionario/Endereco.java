@@ -30,12 +30,11 @@ public class Endereco {
     private String cep;
     private String pais;
 
-    public String setCep(String cep) {
+    public void setCep(String cep) {
         if (cep == null || !cep.matches("\\d{5}-\\d{3}")) {
             throw new CepNotFoundException("CEP inválido");
         } else {
             this.cep = cep;
-            return cep;
         }
     }
 }

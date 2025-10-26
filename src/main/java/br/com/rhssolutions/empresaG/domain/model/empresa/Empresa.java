@@ -4,16 +4,17 @@ import br.com.rhssolutions.empresaG.domain.model.departamento.Departamento;
 import br.com.rhssolutions.empresaG.domain.model.funcionario.Funcionario;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.Data;
+import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
 
-import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity(name = "empresas")
 @Data
-public class Empresa implements Serializable {
+public class Empresa {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -40,6 +41,6 @@ public class Empresa implements Serializable {
 
     @CreationTimestamp
     @Column(name = "data_criacao_empresa", nullable = false, updatable = false)
-    private String dataCriacaoEmpresa;
+    private LocalDateTime dataCriacaoEmpresa;
 
 }

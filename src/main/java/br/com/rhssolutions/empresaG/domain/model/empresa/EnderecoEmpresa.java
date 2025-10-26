@@ -1,9 +1,11 @@
 package br.com.rhssolutions.empresaG.domain.model.empresa;
 
 import br.com.rhssolutions.empresaG.domain.model.exception.CepNotFoundException;
-import jakarta.persistence.*;
+import jakarta.persistence.AttributeOverride;
+import jakarta.persistence.AttributeOverrides;
+import jakarta.persistence.Column;
+import jakarta.persistence.Embeddable;
 import lombok.Data;
-import lombok.RequiredArgsConstructor;
 
 @Data
 @Embeddable
@@ -16,7 +18,6 @@ import lombok.RequiredArgsConstructor;
         @AttributeOverride(name = "cep", column = @Column(name = "cep")),
         @AttributeOverride(name = "pais", column = @Column(name = "país"))
 })
-
 public class EnderecoEmpresa {
 
     private String rua;
@@ -34,14 +35,14 @@ public class EnderecoEmpresa {
     private String pais;
 
 
-    public String setCep(String cep) {
+    public void setCep(String cep) {
         if (cep == null || !cep.matches("\\d{5}-\\d{3}")) {
             throw new CepNotFoundException("CEP inválido");
         } else {
             this.cep = cep;
-            return cep;
         }
     }
+
 
 }
 
