@@ -1,9 +1,11 @@
-package br.com.rhssolutions.empresaG.dto;
+package br.com.rhssolutions.empresaG.dto.mapper;
 
 import br.com.rhssolutions.empresaG.domain.model.departamento.Departamento;
 import br.com.rhssolutions.empresaG.domain.model.empresa.Empresa;
 import br.com.rhssolutions.empresaG.domain.model.empresa.EnderecoEmpresa;
 import br.com.rhssolutions.empresaG.domain.model.funcionario.Funcionario;
+import br.com.rhssolutions.empresaG.dto.EmpresaDTO;
+import br.com.rhssolutions.empresaG.dto.EnderecoEmpresaDTO;
 
 import java.util.stream.Collectors;
 
@@ -34,6 +36,32 @@ public class EmpresaMapper {
                 enderecoEmpresa.getCep(),
                 enderecoEmpresa.getPais()
         );
+    }
+
+    public static Empresa dtoToEmpresa(EmpresaDTO empresaDTO) { // transformar DTO para entidade
+        if (empresaDTO == null) return null;
+
+        Empresa empresa = new Empresa();
+        empresa.setId(empresaDTO.id());
+        empresa.setNome(empresaDTO.nome());
+        empresa.setCnpj(empresaDTO.cnpj());
+        empresa.setEndereco(dtoToEndereco(empresaDTO.endereco()));
+        return empresa;
+    }
+
+    public static EnderecoEmpresa dtoToEndereco(EnderecoEmpresaDTO enderecoEmpresaDTO) {
+        if (enderecoEmpresaDTO == null) return null;
+
+        EnderecoEmpresa enderecoEmpresa = new EnderecoEmpresa();
+        enderecoEmpresa.setRua(enderecoEmpresaDTO.rua());
+        enderecoEmpresa.setNumero(enderecoEmpresaDTO.numero());
+        enderecoEmpresa.setBairro(enderecoEmpresaDTO.bairro());
+        enderecoEmpresa.setCidade(enderecoEmpresaDTO.cidade());
+        enderecoEmpresa.setEstado(enderecoEmpresaDTO.estado());
+        enderecoEmpresa.setCep(enderecoEmpresaDTO.cep());
+        enderecoEmpresa.setPais(enderecoEmpresaDTO.pais());
+
+        return enderecoEmpresa;
     }
 
 
