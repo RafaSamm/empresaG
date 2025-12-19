@@ -3,11 +3,17 @@ package br.com.rhssolutions.empresaG.domain.model.funcionario;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.MappedSuperclass;
-import lombok.Data;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 import java.time.LocalDate;
 
-@Data
+@Getter
+@Setter
+@ToString
+@RequiredArgsConstructor
 @MappedSuperclass
 public abstract class Pessoa {
 
@@ -27,5 +33,5 @@ public abstract class Pessoa {
     private String telefone;
 
     @Embedded
-    private Endereco endereco;
+    private EnderecoFuncionario enderecoFuncionario;
 }

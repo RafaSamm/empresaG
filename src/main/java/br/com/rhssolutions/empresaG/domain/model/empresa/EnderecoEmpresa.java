@@ -1,6 +1,5 @@
 package br.com.rhssolutions.empresaG.domain.model.empresa;
 
-import br.com.rhssolutions.empresaG.domain.model.exception.CepNotFoundException;
 import jakarta.persistence.AttributeOverride;
 import jakarta.persistence.AttributeOverrides;
 import jakarta.persistence.Column;
@@ -33,16 +32,6 @@ public class EnderecoEmpresa {
     private String cep;
 
     private String pais;
-
-
-    public void setCep(String cep) {
-        if (cep == null || !cep.matches("\\d{5}-\\d{3}")) {
-            throw new CepNotFoundException("CEP inválido");
-        } else {
-            this.cep = cep;
-        }
-    }
-
 
 }
 

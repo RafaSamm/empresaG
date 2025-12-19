@@ -1,7 +1,7 @@
 package br.com.rhssolutions.empresaG.dto.mapper;
 
 import br.com.rhssolutions.empresaG.domain.model.empresa.Empresa;
-import br.com.rhssolutions.empresaG.domain.model.funcionario.Endereco;
+import br.com.rhssolutions.empresaG.domain.model.funcionario.EnderecoFuncionario;
 import br.com.rhssolutions.empresaG.domain.model.funcionario.Funcionario;
 import br.com.rhssolutions.empresaG.dto.EnderecoFuncionarioDTO;
 import br.com.rhssolutions.empresaG.dto.FuncionarioDTO;
@@ -19,23 +19,23 @@ public class FuncionarioMapper {
                 funcionario.getEmail(),
                 funcionario.getTelefone(),
                 funcionario.getSalario(),
-                enderecoFuncionarioToDTO(funcionario.getEndereco()),
+                enderecoFuncionarioToDTO(funcionario.getEnderecoFuncionario()),
                 funcionario.getEmpresa().getId()
         );
     }
 
-    public static EnderecoFuncionarioDTO enderecoFuncionarioToDTO(Endereco endereco) {
-        if (endereco == null) return null;
+    public static EnderecoFuncionarioDTO enderecoFuncionarioToDTO(EnderecoFuncionario enderecoFuncionario) {
+        if (enderecoFuncionario == null) return null;
 
         return new EnderecoFuncionarioDTO(
-                endereco.getRua(),
-                endereco.getNumero(),
-                endereco.getComplemento(),
-                endereco.getBairro(),
-                endereco.getCidade(),
-                endereco.getEstado(),
-                endereco.getCep(),
-                endereco.getPais()
+                enderecoFuncionario.getRua(),
+                enderecoFuncionario.getNumero(),
+                enderecoFuncionario.getComplemento(),
+                enderecoFuncionario.getBairro(),
+                enderecoFuncionario.getCidade(),
+                enderecoFuncionario.getEstado(),
+                enderecoFuncionario.getCep(),
+                enderecoFuncionario.getPais()
         );
     }
 
@@ -52,23 +52,23 @@ public class FuncionarioMapper {
         funcionario.setEmail(funcionarioDTO.email());
         funcionario.setTelefone(funcionarioDTO.telefone());
         funcionario.setSalario(funcionarioDTO.salario());
-        funcionario.setEndereco(dtoToEnderecoFuncionario(funcionarioDTO.endereco()));
+        funcionario.setEnderecoFuncionario(dtoToEnderecoFuncionario(funcionarioDTO.endereco()));
         funcionario.setEmpresa(empresa);
         return funcionario;
     }
 
-    public static Endereco dtoToEnderecoFuncionario(EnderecoFuncionarioDTO enderecoFuncionarioDTO) {
+    public static EnderecoFuncionario dtoToEnderecoFuncionario(EnderecoFuncionarioDTO enderecoFuncionarioDTO) {
         if (enderecoFuncionarioDTO == null) return null;
 
-        Endereco endereco = new Endereco();
-        endereco.setRua(enderecoFuncionarioDTO.rua());
-        endereco.setNumero(enderecoFuncionarioDTO.numero());
-        endereco.setComplemento(enderecoFuncionarioDTO.complemento());
-        endereco.setBairro(enderecoFuncionarioDTO.bairro());
-        endereco.setCidade(enderecoFuncionarioDTO.cidade());
-        endereco.setEstado(enderecoFuncionarioDTO.estado());
-        endereco.setCep(enderecoFuncionarioDTO.cep());
-        endereco.setPais(enderecoFuncionarioDTO.pais());
-        return endereco;
+        EnderecoFuncionario enderecoFuncionario = new EnderecoFuncionario();
+        enderecoFuncionario.setRua(enderecoFuncionarioDTO.rua());
+        enderecoFuncionario.setNumero(enderecoFuncionarioDTO.numero());
+        enderecoFuncionario.setComplemento(enderecoFuncionarioDTO.complemento());
+        enderecoFuncionario.setBairro(enderecoFuncionarioDTO.bairro());
+        enderecoFuncionario.setCidade(enderecoFuncionarioDTO.cidade());
+        enderecoFuncionario.setEstado(enderecoFuncionarioDTO.estado());
+        enderecoFuncionario.setCep(enderecoFuncionarioDTO.cep());
+        enderecoFuncionario.setPais(enderecoFuncionarioDTO.pais());
+        return enderecoFuncionario;
     }
 }

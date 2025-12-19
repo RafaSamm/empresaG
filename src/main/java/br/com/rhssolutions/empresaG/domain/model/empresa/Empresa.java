@@ -4,7 +4,9 @@ import br.com.rhssolutions.empresaG.domain.model.departamento.Departamento;
 import br.com.rhssolutions.empresaG.domain.model.funcionario.Funcionario;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -13,7 +15,10 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity(name = "empresas")
-@Data
+@Getter
+@Setter
+@ToString
+@RequiredArgsConstructor
 public class Empresa {
 
     @Id

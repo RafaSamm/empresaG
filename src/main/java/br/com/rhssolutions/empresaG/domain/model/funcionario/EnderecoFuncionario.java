@@ -1,6 +1,5 @@
 package br.com.rhssolutions.empresaG.domain.model.funcionario;
 
-import br.com.rhssolutions.empresaG.domain.model.exception.CepNotFoundException;
 import jakarta.persistence.AttributeOverride;
 import jakarta.persistence.AttributeOverrides;
 import jakarta.persistence.Column;
@@ -19,7 +18,7 @@ import lombok.Data;
         @AttributeOverride(name = "pais", column = @Column(name = "país"))
 })
 
-public class Endereco {
+public class EnderecoFuncionario {
 
     private String rua;
     private Integer numero;
@@ -30,11 +29,4 @@ public class Endereco {
     private String cep;
     private String pais;
 
-    public void setCep(String cep) {
-        if (cep == null || !cep.matches("\\d{5}-\\d{3}")) {
-            throw new CepNotFoundException("CEP inválido");
-        } else {
-            this.cep = cep;
-        }
-    }
 }

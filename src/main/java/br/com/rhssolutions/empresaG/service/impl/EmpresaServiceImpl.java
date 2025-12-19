@@ -1,12 +1,13 @@
 package br.com.rhssolutions.empresaG.service.impl;
 
 import br.com.rhssolutions.empresaG.domain.model.empresa.Empresa;
-import br.com.rhssolutions.empresaG.domain.model.exception.EmpresaNotFoundException;
 import br.com.rhssolutions.empresaG.domain.repository.EmpresaRepository;
+import br.com.rhssolutions.empresaG.exception.EmpresaNotFoundException;
 import br.com.rhssolutions.empresaG.service.EmpresaService;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
+import java.util.List;
 
 @Service
 public class EmpresaServiceImpl implements EmpresaService {
@@ -20,22 +21,22 @@ public class EmpresaServiceImpl implements EmpresaService {
 
 
     @Override
+    @Transactional
     public Empresa criarEmpresa(Empresa empresa) {
-        var empresaExistente = empresaRepository.existsByCnpj((empresa.getCnpj()));
-        if (empresaExistente) {
+        if (empresaRepository.existsByCnpj((empresa.getCnpj()))) {
             throw new IllegalArgumentException("Empresa já existe com este CNPJ");
-        } else {
-            return empresaRepository.save(empresa);
         }
+        return empresaRepository.save(empresa);
     }
 
     @Override
-    public Optional<Empresa> buscarEmpresaPorId(Long id) {
-        return Optional.ofNullable(empresaRepository.findById(id).orElseThrow(() ->
-                new EmpresaNotFoundException("Empresa não encontrada")));
+    public Empresa buscarEmpresaPorId(Long id) {
+        return empresaRepository.findById(id).orElseThrow(() ->
+                new EmpresaNotFoundException("Empresa não encontrada"));
     }
 
     @Override
+    @Transactional
     public void deletarEmpresaPorId(Long id) {
         empresaRepository.delete(empresaRepository.findById(id).orElseThrow(() ->
                 new EmpresaNotFoundException("Empresa não encontrada")));
@@ -43,11 +44,11 @@ public class EmpresaServiceImpl implements EmpresaService {
 
     @Override
     public Iterable<Empresa> buscarTodasEmpresas() {
-        if (empresaRepository.findAll().isEmpty()) {
+        List<Empresa> empresas = empresaRepository.findAll();
+        if (empresas.isEmpty()) {
             throw new EmpresaNotFoundException("Não há empresas cadastradas");
-        } else {
-            return empresaRepository.findAll();
         }
+        return empresas;
     }
 
 }

@@ -3,6 +3,8 @@ package br.com.rhssolutions.empresaG.service.impl;
 import br.com.rhssolutions.empresaG.domain.model.departamento.Departamento;
 import br.com.rhssolutions.empresaG.domain.repository.DepartamentoRepository;
 import br.com.rhssolutions.empresaG.domain.repository.EmpresaRepository;
+import br.com.rhssolutions.empresaG.exception.DepartamentoNotFoundException;
+import br.com.rhssolutions.empresaG.exception.EmpresaNotFoundException;
 import br.com.rhssolutions.empresaG.service.DepartamentoService;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
@@ -23,11 +25,11 @@ public class DepartamentoServiceImpl implements DepartamentoService {
     @Transactional
     public Departamento criarDepartamento(Long empresaId, Departamento departamento) {
         var empresa = empresaRepository.findById(empresaId).orElseThrow(()
-                -> new RuntimeException("Empresa não encontrada"));
+                -> new EmpresaNotFoundException("Empresa não encontrada"));
 
         var departamentoExistente = departamentoRepository.existsByNome(departamento.getNome());
         if (departamentoExistente) {
-            throw new IllegalArgumentException("Departamento já existe");
+            throw new DepartamentoNotFoundException("Departamento já existe");
         } else {
             departamento.setEmpresa(empresa);
             return departamentoRepository.save(departamento);
@@ -37,27 +39,27 @@ public class DepartamentoServiceImpl implements DepartamentoService {
     @Override
     public Departamento buscarDepartamentoPorId(Long id) {
         return departamentoRepository.findById(id).orElseThrow(()
-                -> new RuntimeException("Departamento não encontrado"));
+                -> new DepartamentoNotFoundException("Departamento não encontrado"));
 
     }
-
 
     @Override
     @Transactional
     public Departamento atualizarDepartamento(Long id, Departamento departamento) {
         var departamentoExistente = departamentoRepository.findById(id).orElseThrow(()
-                -> new RuntimeException("Departamento não encontrado"));
+                -> new DepartamentoNotFoundException("Departamento não encontrado"));
         departamentoExistente.setNome(departamento.getNome());
         departamentoExistente.setDescricao(departamento.getDescricao());
         return departamentoRepository.save(departamentoExistente);
     }
 
     @Override
+    @Transactional
     public Departamento deletarDepartamento(Long id) {
         if (departamentoRepository.existsById(id)) {
             departamentoRepository.deleteById(id);
         } else {
-            throw new RuntimeException("Departamento não encontrado");
+            throw new DepartamentoNotFoundException("Departamento não encontrado");
         }
         return null;
     }

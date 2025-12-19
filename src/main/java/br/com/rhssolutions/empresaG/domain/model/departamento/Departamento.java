@@ -2,13 +2,19 @@ package br.com.rhssolutions.empresaG.domain.model.departamento;
 
 import br.com.rhssolutions.empresaG.domain.model.empresa.Empresa;
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 
 @Entity(name = "departamentos")
-@Data
+@Getter
+@Setter
+@ToString
+@RequiredArgsConstructor
 public class Departamento {
 
     @Id

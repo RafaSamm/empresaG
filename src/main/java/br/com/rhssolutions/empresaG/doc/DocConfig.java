@@ -17,7 +17,7 @@ public class DocConfig {
         return new OpenAPI()
                 .info(new Info()
                         .title("EmpresaG API")
-                        .version("1.0.0")
+                        .version("1.1")
                         .description("API para gerenciamento de empresas")
                         .contact(customContact()))
                 .servers(List.of(

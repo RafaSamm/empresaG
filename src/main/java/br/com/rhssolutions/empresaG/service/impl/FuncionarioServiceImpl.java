@@ -3,10 +3,11 @@ package br.com.rhssolutions.empresaG.service.impl;
 import br.com.rhssolutions.empresaG.domain.model.funcionario.Funcionario;
 import br.com.rhssolutions.empresaG.domain.repository.EmpresaRepository;
 import br.com.rhssolutions.empresaG.domain.repository.FuncionarioRepository;
+import br.com.rhssolutions.empresaG.exception.EmpresaNotFoundException;
+import br.com.rhssolutions.empresaG.exception.FuncionarioNotFoundException;
 import br.com.rhssolutions.empresaG.service.FuncionarioService;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Service
 public class FuncionarioServiceImpl implements FuncionarioService {
@@ -20,12 +21,13 @@ public class FuncionarioServiceImpl implements FuncionarioService {
     }
 
     @Override
+    @Transactional
     public Funcionario salvarFuncionario(Long empresaId, Funcionario funcionario) {
         var empresa = empresaRepository.findById(empresaId).orElseThrow(()
-                -> new RuntimeException("Empresa não encontrada"));
+                -> new EmpresaNotFoundException("Empresa não encontrada"));
         var funcionarioExistente = funcionarioRepository.existsByCpf(funcionario.getCpf());
         if (funcionarioExistente) {
-            throw new IllegalArgumentException("Funcionário já cadastrado com este CPF.");
+            throw new FuncionarioNotFoundException("Funcionário já cadastrado com este CPF.");
         } else {
             funcionario.setEmpresa(empresa);
             return funcionarioRepository.save(funcionario);
@@ -33,18 +35,16 @@ public class FuncionarioServiceImpl implements FuncionarioService {
     }
 
     @Override
-    public Optional<Funcionario> buscarPorId(Long id) {
-        if (funcionarioRepository.existsById(id)) {
-            return funcionarioRepository.findById(id);
-        } else {
-            throw new RuntimeException("Funcionário não encontrado");
-        }
+    public Funcionario buscarPorId(Long id) {
+        return funcionarioRepository.findById(id).orElseThrow(()
+                -> new FuncionarioNotFoundException("Funcionário não encontrado"));
     }
 
     @Override
+    @Transactional
     public Funcionario atualizarFuncionario(Long id, Funcionario funcionario) {
         var funcionarioExistente = funcionarioRepository.findById(id).orElseThrow(()
-                -> new RuntimeException("Funcionário não encontrado"));
+                -> new FuncionarioNotFoundException("Funcionário não encontrado"));
         funcionarioExistente.setNome(funcionario.getNome());
         funcionarioExistente.setEmail(funcionario.getEmail());
         funcionarioExistente.setTelefone(funcionario.getTelefone());
@@ -53,11 +53,12 @@ public class FuncionarioServiceImpl implements FuncionarioService {
     }
 
     @Override
+    @Transactional
     public void deletarFuncionario(Long id) {
         if (funcionarioRepository.existsById(id)) {
             funcionarioRepository.deleteById(id);
         } else {
-            throw new RuntimeException("Funcionário não encontrado");
+            throw new FuncionarioNotFoundException("Funcionário não encontrado");
         }
     }
 }

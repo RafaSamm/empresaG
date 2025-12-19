@@ -16,7 +16,6 @@ public record EmpresaDTO(
         EnderecoEmpresaDTO endereco,
         Set<Long> departamentosId,
         Set<Long> funcionariosId
-
 ) {
 }
 

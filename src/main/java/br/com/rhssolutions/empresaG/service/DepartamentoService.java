@@ -11,5 +11,4 @@ public interface DepartamentoService {
 
     Departamento deletarDepartamento(Long id);
 
-
 }

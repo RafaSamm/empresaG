@@ -1,4 +1,4 @@
-package br.com.rhssolutions.empresaG.domain.model.exception;
+package br.com.rhssolutions.empresaG.exception;
 
 public class EmpresaNotFoundException extends RuntimeException {
 

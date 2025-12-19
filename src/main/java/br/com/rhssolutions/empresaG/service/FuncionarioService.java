@@ -8,7 +8,7 @@ public interface FuncionarioService {
 
     Funcionario salvarFuncionario(Long empresaId, Funcionario funcionario);
 
-    Optional<Funcionario> buscarPorId(Long id);
+    Funcionario buscarPorId(Long id);
 
     Funcionario atualizarFuncionario(Long id, Funcionario funcionario);
 

@@ -7,7 +7,7 @@ import java.util.Optional;
 public interface EmpresaService {
     Empresa criarEmpresa(Empresa empresa);
 
-    Optional<Empresa> buscarEmpresaPorId(Long id);
+    Empresa buscarEmpresaPorId(Long id);
 
     void deletarEmpresaPorId(Long id);
 

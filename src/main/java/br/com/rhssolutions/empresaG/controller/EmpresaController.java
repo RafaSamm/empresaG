@@ -1,8 +1,8 @@
 package br.com.rhssolutions.empresaG.controller;
 
 import br.com.rhssolutions.empresaG.domain.model.empresa.Empresa;
-import br.com.rhssolutions.empresaG.service.DepartamentoService;
 import br.com.rhssolutions.empresaG.service.EmpresaService;
+import br.com.rhssolutions.empresaG.service.EnderecoServiceClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,18 +11,17 @@ import org.springframework.web.bind.annotation.*;
 public class EmpresaController {
 
     private final EmpresaService empresaService;
-    private final DepartamentoService departamentoService;
+    private final EnderecoServiceClient enderecoServiceClient;
 
-    public EmpresaController(EmpresaService empresaService, DepartamentoService departamentoService) {
+    public EmpresaController(EmpresaService empresaService, EnderecoServiceClient enderecoServiceClient) {
         this.empresaService = empresaService;
-        this.departamentoService = departamentoService;
+
+        this.enderecoServiceClient = enderecoServiceClient;
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Empresa> buscarEmpresa(@PathVariable Long id) {
-        return empresaService.buscarEmpresaPorId(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+        return ResponseEntity.ok(empresaService.buscarEmpresaPorId(id));
     }
 
     @PostMapping("/criar")

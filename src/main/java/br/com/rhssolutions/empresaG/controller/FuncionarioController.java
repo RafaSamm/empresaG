@@ -18,9 +18,8 @@ public class FuncionarioController {
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<Optional<Funcionario>> buscarFuncionarioPorId(@PathVariable Long id) {
-        var funcionario = funcionarioService.buscarPorId(id);
-        return ResponseEntity.ok().body(funcionario);
+    public ResponseEntity<Funcionario> buscarFuncionarioPorId(@PathVariable Long id) {
+        return ResponseEntity.ok().body(funcionarioService.buscarPorId(id));
     }
 
     @PostMapping("/cadastrar/empresa/{empresaId}")

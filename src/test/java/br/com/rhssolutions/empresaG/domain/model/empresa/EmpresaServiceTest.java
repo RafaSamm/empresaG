@@ -1,7 +1,7 @@
 package br.com.rhssolutions.empresaG.domain.model.empresa;
 
-import br.com.rhssolutions.empresaG.domain.model.exception.EmpresaNotFoundException;
 import br.com.rhssolutions.empresaG.domain.repository.EmpresaRepository;
+import br.com.rhssolutions.empresaG.exception.EmpresaNotFoundException;
 import br.com.rhssolutions.empresaG.service.impl.EmpresaServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -61,9 +61,9 @@ public class EmpresaServiceTest {
         var empresaEsperada = criarEmpresa();
         when(empresaRepository.findById(anyLong())).thenReturn(Optional.of(empresaEsperada));
 
-        Optional<Empresa> sut = empresaService.buscarEmpresaPorId(1L);
-        assertThat(sut).isNotEmpty();
-        assertThat(sut.get()).isEqualTo(empresaEsperada);
+        Empresa sut = empresaService.buscarEmpresaPorId(1L);
+        assertThat(sut).isNotNull();
+        assertThat(sut).isEqualTo(empresaEsperada);
     }
 
     @Test
