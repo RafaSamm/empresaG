@@ -1,5 +1,5 @@
 <h1 align="center">EMPRESAG</h1>
-<p align="center">Projeto destinado a área empresarial - versão 1.0.0</p>
+<p align="center">Projeto destinado a área empresarial - versão 1.1</p>
 
 
 ## TECNOLOGIAS E FERRAMENTAS
@@ -13,12 +13,13 @@ src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/swagger/swagger-p
 ```
 src/main/java/br/com/rhssolutions/empresaG
 ├── controller # Endpoints REST
-├── dto # DTOs (em evolução)
+├── client # Integração ViaCep
+├── exceptions # Controle geral de exceções personalizadas
+├── dto # DTOs
 ├── service # Interfaces de serviços
 ├── service/impl # Implementações de serviços
 ├── domain/model # Entidades do domínio
 ├── domain/repository # Interfaces de repositório (Spring Data)
-├── controller/exception# Tratamento global de exceções
 ├── doc # Configuração do Swagger/OpenAPI
 └── EmpresaGApplication.java
 ```
