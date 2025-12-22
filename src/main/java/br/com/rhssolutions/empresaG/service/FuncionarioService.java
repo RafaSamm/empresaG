@@ -2,8 +2,6 @@ package br.com.rhssolutions.empresaG.service;
 
 import br.com.rhssolutions.empresaG.domain.model.funcionario.Funcionario;
 
-import java.util.Optional;
-
 public interface FuncionarioService {
 
     Funcionario salvarFuncionario(Long empresaId, Funcionario funcionario);

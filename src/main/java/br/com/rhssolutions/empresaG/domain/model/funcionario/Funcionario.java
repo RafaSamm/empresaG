@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
 
@@ -29,9 +31,11 @@ public class Funcionario extends Pessoa {
     @JoinColumn(name = "empresa_id")
     private Empresa empresa;
 
+    @CreationTimestamp
     @Column(name = "inicio_data_cadastro", nullable = false, updatable = false)
     private LocalDateTime inicioDataCadastro;
 
-    @Column(name = "fim_data_cadastro", nullable = false)
+    @UpdateTimestamp
+    @Column(name = "fim_data_cadastro", nullable = false, updatable = false)
     private LocalDateTime fimDataCadastro;
 }

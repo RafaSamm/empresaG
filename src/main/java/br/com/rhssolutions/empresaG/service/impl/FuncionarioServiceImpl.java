@@ -1,5 +1,6 @@
 package br.com.rhssolutions.empresaG.service.impl;
 
+import br.com.rhssolutions.empresaG.domain.model.empresa.Empresa;
 import br.com.rhssolutions.empresaG.domain.model.funcionario.Funcionario;
 import br.com.rhssolutions.empresaG.domain.repository.EmpresaRepository;
 import br.com.rhssolutions.empresaG.domain.repository.FuncionarioRepository;
@@ -23,9 +24,9 @@ public class FuncionarioServiceImpl implements FuncionarioService {
     @Override
     @Transactional
     public Funcionario salvarFuncionario(Long empresaId, Funcionario funcionario) {
-        var empresa = empresaRepository.findById(empresaId).orElseThrow(()
+        Empresa empresa = empresaRepository.findById(empresaId).orElseThrow(()
                 -> new EmpresaNotFoundException("Empresa não encontrada"));
-        var funcionarioExistente = funcionarioRepository.existsByCpf(funcionario.getCpf());
+        Boolean funcionarioExistente = funcionarioRepository.existsByCpf(funcionario.getCpf());
         if (funcionarioExistente) {
             throw new FuncionarioNotFoundException("Funcionário já cadastrado com este CPF.");
         } else {
@@ -43,7 +44,7 @@ public class FuncionarioServiceImpl implements FuncionarioService {
     @Override
     @Transactional
     public Funcionario atualizarFuncionario(Long id, Funcionario funcionario) {
-        var funcionarioExistente = funcionarioRepository.findById(id).orElseThrow(()
+        Funcionario funcionarioExistente = funcionarioRepository.findById(id).orElseThrow(()
                 -> new FuncionarioNotFoundException("Funcionário não encontrado"));
         funcionarioExistente.setNome(funcionario.getNome());
         funcionarioExistente.setEmail(funcionario.getEmail());
