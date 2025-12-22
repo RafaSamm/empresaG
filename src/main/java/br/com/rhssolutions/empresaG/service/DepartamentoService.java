@@ -9,6 +9,6 @@ public interface DepartamentoService {
 
     Departamento atualizarDepartamento(Long id, Departamento departamento);
 
-    Departamento deletarDepartamento(Long id);
+    void deletarDepartamento(Long id);
 
 }

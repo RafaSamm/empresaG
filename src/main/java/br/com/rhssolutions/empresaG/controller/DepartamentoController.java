@@ -1,7 +1,11 @@
 package br.com.rhssolutions.empresaG.controller;
 
 import br.com.rhssolutions.empresaG.domain.model.departamento.Departamento;
+import br.com.rhssolutions.empresaG.dto.DepartamentoDTO;
+import br.com.rhssolutions.empresaG.dto.mapper.DepartamentoMapper;
 import br.com.rhssolutions.empresaG.service.DepartamentoService;
+import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,26 +20,38 @@ public class DepartamentoController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Departamento> buscarDepartamentoPorId(@PathVariable Long id) {
-        var departamento = departamentoService.buscarDepartamentoPorId(id);
-        return ResponseEntity.ok(departamento);
+    public ResponseEntity<DepartamentoDTO> buscarDepartamentoPorId(@PathVariable Long id) {
+        Departamento departamento = departamentoService.buscarDepartamentoPorId(id);
+
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(DepartamentoMapper.departamentoToDTO(departamento));
+
     }
 
     @PostMapping("/criar/empresa/{empresaId}")
-    public ResponseEntity<Departamento> criarDepartamento(@PathVariable Long empresaId, @RequestBody Departamento departamento) {
-        var departamentoCriado = departamentoService.criarDepartamento(empresaId, departamento);
-        return ResponseEntity.ok(departamentoCriado);
+    public ResponseEntity<DepartamentoDTO> criarDepartamento(@PathVariable Long empresaId, @Valid @RequestBody DepartamentoDTO dto) {
+        Departamento departamento = DepartamentoMapper.dtoToDepartamento(dto, null);
+
+        Departamento salvar = departamentoService.criarDepartamento(empresaId, departamento);
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(DepartamentoMapper.departamentoToDTO(salvar));
+
     }
 
     @PutMapping("/atualizar/{id}")
-    public ResponseEntity<Departamento> atualizarDepartamento(@PathVariable Long id, @RequestBody Departamento departamento) {
-        var departamentoAtualizado = departamentoService.atualizarDepartamento(id, departamento);
-        return ResponseEntity.ok(departamentoAtualizado);
+    public ResponseEntity<DepartamentoDTO> atualizarDepartamento(@PathVariable Long id, @Valid @RequestBody DepartamentoDTO dto) {
+        Departamento departamento = DepartamentoMapper.dtoToDepartamento(dto, null);
+
+        Departamento atualizado = departamentoService.atualizarDepartamento(id, departamento);
+
+        return ResponseEntity.ok().body(DepartamentoMapper.departamentoToDTO(atualizado));
+
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Departamento> deletarDepartamento(@PathVariable Long id) {
-        var departamentoDeletado = departamentoService.deletarDepartamento(id);
-        return ResponseEntity.ok(departamentoDeletado);
+    public ResponseEntity<Void> deletarDepartamento(@PathVariable Long id) {
+        departamentoService.deletarDepartamento(id);
+        return ResponseEntity.noContent().build();
+
     }
 }
