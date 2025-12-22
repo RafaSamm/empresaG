@@ -2,10 +2,10 @@ package br.com.rhssolutions.empresaG.domain.model.funcionario;
 
 import br.com.rhssolutions.empresaG.domain.model.empresa.Empresa;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 import java.time.LocalDateTime;
 
@@ -13,8 +13,8 @@ import java.time.LocalDateTime;
 @Entity(name = "funcionarios")
 @Getter
 @Setter
-@ToString
-@RequiredArgsConstructor
+@AllArgsConstructor
+@NoArgsConstructor
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public class Funcionario extends Pessoa {
 

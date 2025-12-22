@@ -10,6 +10,7 @@ import br.com.rhssolutions.empresaG.dto.EnderecoEmpresaDTO;
 import java.util.stream.Collectors;
 
 public class EmpresaMapper {
+
     public static EmpresaDTO empresaToDTO(Empresa empresa) { // transformar entidade para DTO
         if (empresa == null) return null;
 
