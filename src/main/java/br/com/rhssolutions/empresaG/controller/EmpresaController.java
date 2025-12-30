@@ -1,6 +1,7 @@
 package br.com.rhssolutions.empresaG.controller;
 
 import br.com.rhssolutions.empresaG.domain.model.empresa.Empresa;
+import br.com.rhssolutions.empresaG.dto.ApiResponse;
 import br.com.rhssolutions.empresaG.dto.EmpresaDTO;
 import br.com.rhssolutions.empresaG.dto.mapper.EmpresaMapper;
 import br.com.rhssolutions.empresaG.service.EmpresaService;
@@ -10,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.stream.StreamSupport;
 
 @RestController
@@ -26,14 +28,22 @@ public class EmpresaController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<EmpresaDTO> buscarEmpresa(@PathVariable Long id) {
+    public ResponseEntity<ApiResponse<EmpresaDTO>> buscarEmpresa(@PathVariable Long id) {
         Empresa empresa = empresaService.buscarEmpresaPorId(id);
 
-        return ResponseEntity.status(HttpStatus.OK).body(EmpresaMapper.empresaToDTO(empresa));
+        ApiResponse<EmpresaDTO> response = new ApiResponse<>(
+                HttpStatus.OK.value(),
+                "Empresa encontrada com este ID",
+                EmpresaMapper.empresaToDTO(empresa),
+                LocalDateTime.now()
+        );
+        return ResponseEntity.ok(response);
+
+
     }
 
     @PostMapping("/criar")
-    public ResponseEntity<EmpresaDTO> criarEmpresa(@Valid @RequestBody EmpresaDTO dto) {
+    public ResponseEntity<ApiResponse<EmpresaDTO>> criarEmpresa(@Valid @RequestBody EmpresaDTO dto) {
         Empresa empresa = EmpresaMapper.dtoToEmpresa(dto);
 
         // transformar DTO para entidade
@@ -41,25 +51,47 @@ public class EmpresaController {
 
         Empresa salvar = empresaService.criarEmpresa(empresa);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(EmpresaMapper.empresaToDTO(salvar));
+        ApiResponse<EmpresaDTO> response = new ApiResponse<>(
+                HttpStatus.CREATED.value(),
+                "Empresa criada com sucesso",
+                EmpresaMapper.empresaToDTO(salvar),
+                LocalDateTime.now()
+        );
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletarEmpresa(@PathVariable Long id) {
+    public ResponseEntity<ApiResponse<Void>> deletarEmpresa(@PathVariable Long id) {
         empresaService.deletarEmpresaPorId(id);
-        return ResponseEntity.noContent().build();
+
+        ApiResponse<Void> response = new ApiResponse<>(
+                HttpStatus.NO_CONTENT.value(),
+                "Empresa deletada com sucesso",
+                null,
+                LocalDateTime.now()
+        );
+
+        return ResponseEntity.ok(response);
 
     }
 
     @GetMapping
-    public ResponseEntity<Iterable<EmpresaDTO>> buscarTodasEmpresas() {
+    public ResponseEntity<ApiResponse<Iterable<EmpresaDTO>>> buscarTodasEmpresas() {
         Iterable<Empresa> empresas = empresaService.buscarTodasEmpresas();
 
         Iterable<EmpresaDTO> dtoLista = StreamSupport.stream(empresas.spliterator(), false)
                 .map(EmpresaMapper::empresaToDTO)
                 .toList(); //Converte para lista
 
-        return ResponseEntity.ok(dtoLista);
+        ApiResponse<Iterable<EmpresaDTO>> response = new ApiResponse<>(
+                HttpStatus.OK.value(),
+                "Lista de empresas cadastradas",
+                dtoLista,
+                LocalDateTime.now()
+        );
+
+        return ResponseEntity.ok(response);
+
     }
 
 }
