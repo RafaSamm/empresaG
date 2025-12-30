@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @RestController
 @RequestMapping("/departamento")
@@ -28,7 +29,7 @@ public class DepartamentoController {
 
         ApiResponse<DepartamentoDTO> response = new ApiResponse<>(
                 HttpStatus.OK.value(),
-                "Departamento encontrado com este ID",
+                "Departamento encontrado com sucesso",
                 DepartamentoMapper.departamentoToDTO(departamento),
                 LocalDateTime.now()
         );
@@ -67,17 +68,15 @@ public class DepartamentoController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<ApiResponse<Void>> deletarDepartamento(@PathVariable Long id) {
+    public ResponseEntity<ApiResponse<List<?>>> deletarDepartamento(@PathVariable Long id) { //Para o caso do retorno nulo onde o objeto foi deletado
         departamentoService.deletarDepartamento(id);
 
-        ApiResponse<Void> response = new ApiResponse<>(
-                HttpStatus.NO_CONTENT.value(),
+        ApiResponse<List<?>> response = new ApiResponse<>(
+                HttpStatus.OK.value(),
                 "Departamento deletado com sucesso",
-                null,
+                List.of(),
                 LocalDateTime.now()
         );
         return ResponseEntity.ok(response);
-
-
     }
 }

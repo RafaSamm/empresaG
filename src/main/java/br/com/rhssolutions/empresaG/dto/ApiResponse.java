@@ -8,4 +8,6 @@ public record ApiResponse<T>(   //Resposta padronizada para os controllers
                                 T data,
                                 LocalDateTime timestamp
 ) {
+
 }
+

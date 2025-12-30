@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @RestController
 @RequestMapping("/funcionario")
@@ -74,13 +75,13 @@ public class FuncionarioController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<ApiResponse<Void>> deletarFuncionario(@PathVariable Long id) {
+    public ResponseEntity<ApiResponse<List<?>>> deletarFuncionario(@PathVariable Long id) { //Para o caso do retorno nulo onde o objeto foi deletado
         funcionarioService.deletarFuncionario(id);
 
-        ApiResponse<Void> response = new ApiResponse<>(
+        ApiResponse<List<?>> response = new ApiResponse<>(
                 HttpStatus.NO_CONTENT.value(),
                 "Funcionario deletado com sucesso",
-                null,
+                List.of(),
                 LocalDateTime.now()
         );
         return ResponseEntity.ok(response);

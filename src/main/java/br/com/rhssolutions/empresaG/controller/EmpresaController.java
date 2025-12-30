@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.stream.StreamSupport;
 
 @RestController
@@ -61,13 +62,13 @@ public class EmpresaController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<ApiResponse<Void>> deletarEmpresa(@PathVariable Long id) {
+    public ResponseEntity<ApiResponse<List<?>>> deletarEmpresa(@PathVariable Long id) { //Para o caso do retorno nulo onde o objeto foi deletado
         empresaService.deletarEmpresaPorId(id);
 
-        ApiResponse<Void> response = new ApiResponse<>(
+        ApiResponse<List<?>> response = new ApiResponse<>(
                 HttpStatus.NO_CONTENT.value(),
                 "Empresa deletada com sucesso",
-                null,
+                List.of(),
                 LocalDateTime.now()
         );
 
@@ -85,7 +86,7 @@ public class EmpresaController {
 
         ApiResponse<Iterable<EmpresaDTO>> response = new ApiResponse<>(
                 HttpStatus.OK.value(),
-                "Lista de empresas cadastradas",
+                "Lista de empresas cadastradas com sucesso",
                 dtoLista,
                 LocalDateTime.now()
         );
