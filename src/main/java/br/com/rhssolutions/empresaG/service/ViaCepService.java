@@ -1,8 +1,8 @@
 package br.com.rhssolutions.empresaG.service;
 
 import br.com.rhssolutions.empresaG.client.ViaCepClient;
-import br.com.rhssolutions.empresaG.exception.CepNotFoundException;
 import br.com.rhssolutions.empresaG.dto.ViaCepResponse;
+import br.com.rhssolutions.empresaG.exception.CepNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -16,7 +16,7 @@ public class ViaCepService {
 
     public ViaCepResponse buscarCep(String cep) {
 
-        if (!cep.matches("\\d{8}")) {
+        if (!cep.matches("\\d{8}") && (!cep.matches("\\d{5}-\\d{3}"))) {
             throw new CepNotFoundException("CEP inválido");
         }
 
