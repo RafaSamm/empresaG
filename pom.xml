@@ -57,6 +57,12 @@
             <scope>runtime</scope>
         </dependency>
 
+        <!--Verificação da saúde da aplicação-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+
         <!-- DOCUMENTAÇÂO -->
         <dependency>
             <groupId>org.springdoc</groupId>
