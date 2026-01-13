@@ -20,7 +20,8 @@ target/
 *.ipr
 
 ### Resources ###
-application-prod.properties
+src/main/resources/application-prod.properties
+
 
 ### NetBeans ###
 /nbproject/private/
