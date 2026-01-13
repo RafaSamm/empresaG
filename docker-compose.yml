@@ -1,0 +1,36 @@
+services:
+  postgresdb:
+    image:
+      postgres:16
+    container_name: postgres-empresag
+    restart: unless-stopped
+    environment:
+       POSTGRES_DB: empresaG_db
+       POSTGRES_USER: dev
+       POSTGRES_PASSWORD: 2121
+
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  empresagapi:
+    build: .
+    container_name: empresag-api
+    restart: unless-stopped
+    depends_on:
+      - postgresdb
+    ports:
+      - "8082:8080"
+    environment:
+       SPRING_PROFILES_ACTIVE: prod
+       SPRING_DATASOURCE_URL: jdbc:postgresql://postgresdb:5432/empresaG_db
+       SPRING_DATASOURCE_USERNAME: dev
+       SPRING_DATASOURCE_PASSWORD: 2121
+
+volumes:
+  postgres_data:
+
+
+
