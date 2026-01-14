@@ -23,7 +23,11 @@ public class DocConfig {
                 .servers(List.of(
                         new Server()
                                 .url("/")
-                                .description("Servidor Local")
+                                .description("Servidor de desenvolvimento Local")
+                        ,
+                        new Server()
+                                .url("https://empresag-api.onrender.com")
+                                .description("Servidor de Produção")
                 ));
     }
 
