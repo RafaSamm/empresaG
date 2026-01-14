@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
@@ -25,5 +26,9 @@ public class GlobalExceptionHandler {
     public ResponseEntity<String> handleException(Exception e) {
         logger.error("Erro não esperado!! Verifique o log da aplicação!!", e);
         return ResponseEntity.internalServerError().body(e.getMessage());
+    }
+
+    @ExceptionHandler(NoResourceFoundException.class)
+    public void ignoreStatic(NoResourceFoundException e) {
     }
 }
