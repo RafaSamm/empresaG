@@ -47,10 +47,9 @@ public class EmpresaController {
     public ResponseEntity<ApiResponse<EmpresaDTO>> criarEmpresa(@Valid @RequestBody EmpresaDTO dto) {
         Empresa empresa = EmpresaMapper.dtoToEmpresa(dto);
 
-        // transformar DTO para entidade
-        empresa.setEndereco(enderecoServiceClient.montarEnderecoEmpresa(dto.endereco()));
-
         Empresa salvar = empresaService.criarEmpresa(empresa);
+
+        empresa.setEndereco(enderecoServiceClient.montarEnderecoEmpresa(dto.endereco()));
 
         ApiResponse<EmpresaDTO> response = new ApiResponse<>(
                 HttpStatus.CREATED.value(),

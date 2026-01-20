@@ -1,5 +1,6 @@
 package br.com.rhssolutions.empresaG.domain.model.empresa;
 
+import br.com.rhssolutions.empresaG.common.EmpresaConstant;
 import br.com.rhssolutions.empresaG.domain.repository.EmpresaRepository;
 import br.com.rhssolutions.empresaG.exception.EmpresaNotFoundException;
 import br.com.rhssolutions.empresaG.service.impl.EmpresaServiceImpl;
@@ -15,10 +16,8 @@ import java.util.Optional;
 import java.util.stream.StreamSupport;
 
 import static br.com.rhssolutions.empresaG.common.EmpresaConstant.criarEmpresa;
-import static br.com.rhssolutions.empresaG.common.EmpresaConstant.criarEmpresaInvalido;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -34,26 +33,42 @@ public class EmpresaServiceTest {
 
     @Test
     public void criarEmpresa_comDadosValidos_retornaEmpresa() {
-        when(empresaRepository.save(criarEmpresa())).thenReturn(criarEmpresa());
+        //Arrange
+        Empresa empresaCriada = EmpresaConstant.criarEmpresa();
 
-        var sut = empresaService.criarEmpresa(criarEmpresa());
-        assertThat(sut).isEqualTo(sut);
+        when(empresaRepository.existsByCnpj(empresaCriada.getCnpj())).thenReturn(false);
+        when(empresaRepository.save(empresaCriada)).thenReturn(empresaCriada);
+
+        //Act
+        Empresa sut = empresaService.criarEmpresa(empresaCriada);
+
+        //Assert
+        assertThat(sut).isNotNull();
+        verify(empresaRepository).existsByCnpj(empresaCriada.getCnpj());
+        verify(empresaRepository).save(empresaCriada);
+
     }
 
     @Test
-    public void criarEmpresa_comDadosInvalidos_retornaEmpresa() {
-        when(empresaRepository.save(criarEmpresaInvalido())).thenThrow(RuntimeException.class);
+    public void criarEmpresa_comDadosInvalidos_retornaExcecao() {
+        Empresa empresaCriada = EmpresaConstant.criarEmpresaInvalido();
 
-        assertThatThrownBy(() -> empresaService.criarEmpresa(criarEmpresaInvalido()))
-                .isInstanceOf(RuntimeException.class);
+        when(empresaRepository.save(empresaCriada)).thenThrow(EmpresaNotFoundException.class);
+
+        assertThatThrownBy(() -> empresaService.criarEmpresa(empresaCriada))
+                .isInstanceOf(EmpresaNotFoundException.class);
+
     }
 
     @Test
     public void criarEmpresa_comDadosValidos_QuandoCNPJjaExiste() {
-        var empresa = criarEmpresa();
-        when(empresaRepository.existsByCnpj(empresa.getCnpj())).thenReturn(true);
+        Empresa empresaCriada = EmpresaConstant.criarEmpresa();
 
-        assertThrows(IllegalArgumentException.class, () -> empresaService.criarEmpresa(empresa));
+        when(empresaRepository.existsByCnpj(empresaCriada.getCnpj())).thenReturn(true);
+
+        assertThatThrownBy(() -> empresaService.criarEmpresa(empresaCriada))
+                .isInstanceOf(EmpresaNotFoundException.class)
+                .hasMessage("Empresa já existe com este CNPJ");
     }
 
     @Test
@@ -76,21 +91,23 @@ public class EmpresaServiceTest {
     }
 
     @Test
-    public void buscarTodasEmpresas() {
-        var empresas = List.of(criarEmpresa());
+    public void buscarTodasEmpresas_quandoExistiremEmpresas_retornaLista() {
+        List<Empresa> empresas = List.of(EmpresaConstant.criarEmpresa());
 
         when(empresaRepository.findAll()).thenReturn(empresas);
-        Iterable<Empresa> sut = empresaService.buscarTodasEmpresas();
 
-        //Conversão de iterable para list para facilitar a asserção
-        List<Empresa> empresasList = StreamSupport.stream(sut.spliterator(),
+
+        Iterable<Empresa> sut = empresaService.buscarTodasEmpresas();
+        //Conversão de iterable para List
+        List<Empresa> listaEmpresas = StreamSupport.stream(sut.spliterator(),
                 false).toList();
 
-        assertThat(empresasList).isNotEmpty();
-        assertThat(empresasList).hasSize(1);
-        assertThat(empresasList.get(0)).isEqualTo(criarEmpresa());
+        assertThat(listaEmpresas).isNotEmpty()
+                .hasSize(1)
+                .isEqualTo(empresas)
+                .containsExactlyElementsOf(empresas); //
 
-
+        verify(empresaRepository).findAll();
     }
 
     @Test

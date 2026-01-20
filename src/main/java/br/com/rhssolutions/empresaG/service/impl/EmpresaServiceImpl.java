@@ -14,7 +14,6 @@ public class EmpresaServiceImpl implements EmpresaService {
 
     private final EmpresaRepository empresaRepository;
 
-
     public EmpresaServiceImpl(EmpresaRepository empresaRepository) {
         this.empresaRepository = empresaRepository;
     }
@@ -24,7 +23,7 @@ public class EmpresaServiceImpl implements EmpresaService {
     @Transactional
     public Empresa criarEmpresa(Empresa empresa) {
         if (empresaRepository.existsByCnpj((empresa.getCnpj()))) {
-            throw new IllegalArgumentException("Empresa já existe com este CNPJ");
+            throw new EmpresaNotFoundException("Empresa já existe com este CNPJ");
         }
         return empresaRepository.save(empresa);
     }
