@@ -42,23 +42,26 @@ mvn spring-boot:run
 ```
 
 
-3. Abra no navegador:
+3. Abra no navegador localmente:
 ```
 http://localhost:8080
+```
+4. Abra no navegador a API em produção:
+```
+https://empresag-api.onrender.com/
 ```
 ## 📖 Documentação da API (Swagger)
 Acesse a interface interativa do Swagger:
 ```
 http://localhost:8080/swagger-ui/index.html
+https://empresag-api.onrender.com/swagger-ui/index.html
 ```
 ### Principais endpoints
 **Empresa**
-- `GET /empresas` — lista todas as empresas
-- `GET /empresas/{id}` — busca por ID
-- `POST /empresas` — cria nova empresa
-- `PUT /empresas/{id}` — atualiza empresa
-- `DELETE /empresas/{id}` — remove empresa
-
+- `GET /empresa` — lista todas as empresas
+- `GET /empresa/{id}` — busca por ID
+- `POST /empresa/criar` — cria nova empresa
+- `DELETE /empresa/{id}` — remove empresa
 
 **Departamento**
 - `GET /departamentos`
