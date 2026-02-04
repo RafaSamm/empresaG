@@ -53,7 +53,7 @@ public class EmpresaServiceImpl implements EmpresaService {
 
     @Override
     public List<Empresa> buscarTodasEmpresasAdmin() {
-        List<Empresa> empresas = empresaRepository.findAll();
+        List<Empresa> empresas = empresaRepository.findById(1L).stream().toList();
         if (empresas.isEmpty()) {
             throw new EmpresaNotFoundException("Não há empresas cadastradas");
         }
