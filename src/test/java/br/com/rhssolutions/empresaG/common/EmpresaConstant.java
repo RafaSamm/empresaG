@@ -2,6 +2,7 @@ package br.com.rhssolutions.empresaG.common;
 
 import br.com.rhssolutions.empresaG.domain.model.empresa.Empresa;
 import br.com.rhssolutions.empresaG.domain.model.empresa.EnderecoEmpresa;
+import br.com.rhssolutions.empresaG.dto.EnderecoEmpresaDTO;
 
 public class EmpresaConstant {
 
@@ -13,32 +14,32 @@ public class EmpresaConstant {
         var empresa = new Empresa();
         empresa.setNome("Empresa Teste");
         empresa.setCnpj(CNPJ_VALIDO);
-        var endereco = new EnderecoEmpresa();
-        endereco.setRua("Rua Teste");
-        endereco.setNumero(123);
-        endereco.setBairro("Bairro Teste");
-        endereco.setCidade("Cidade Teste");
-        endereco.setEstado("Estado Teste");
-        endereco.setCep(CEP_VALIDO);
-        endereco.setPais("pais");
-        empresa.setEndereco(endereco);
         return empresa;
     }
 
-    public static Empresa criarEmpresaInvalido() {
-        var empresa = new Empresa();
-        empresa.setNome("");
-        empresa.setCnpj("");
-        var endereco = new EnderecoEmpresa();
-        endereco.setRua("");
-        endereco.setNumero(0);
-        endereco.setBairro("");
-        endereco.setCidade("");
-        endereco.setEstado("");
-        endereco.setCep(CEP_VALIDO);
-        endereco.setPais("");
-        empresa.setEndereco(endereco);
-        return empresa;
+    public static EnderecoEmpresaDTO criarEnderecoEmpresaDTO() {
+        return new EnderecoEmpresaDTO(
+                "Rua Carlo de Falco",
+                123,
+                "Bairro Teste",
+                "São Paulo",
+                "SP",
+                CEP_VALIDO,
+                "Brasil"
+        );
     }
+
+    public static EnderecoEmpresa criarEnderecoEmpresaCompleto() {
+        EnderecoEmpresa endereco = new EnderecoEmpresa();
+        endereco.setRua("Rua Carlo de Falco");
+        endereco.setNumero(123);
+        endereco.setBairro("Bairro Teste");
+        endereco.setCidade("São Paulo");
+        endereco.setEstado("SP");
+        endereco.setCep(CEP_VALIDO);
+        endereco.setPais("Brasil");
+        return endereco;
+    }
+
 
 }

@@ -7,25 +7,24 @@ import br.com.rhssolutions.empresaG.dto.mapper.EmpresaMapper;
 import br.com.rhssolutions.empresaG.service.EmpresaService;
 import br.com.rhssolutions.empresaG.service.EnderecoServiceClient;
 import jakarta.validation.Valid;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.stream.StreamSupport;
 
 @RestController
 @RequestMapping("/empresa")
 public class EmpresaController {
 
     private final EmpresaService empresaService;
-    private final EnderecoServiceClient enderecoServiceClient;
 
     public EmpresaController(EmpresaService empresaService, EnderecoServiceClient enderecoServiceClient) {
         this.empresaService = empresaService;
 
-        this.enderecoServiceClient = enderecoServiceClient;
     }
 
     @GetMapping("/{id}")
@@ -47,9 +46,7 @@ public class EmpresaController {
     public ResponseEntity<ApiResponse<EmpresaDTO>> criarEmpresa(@Valid @RequestBody EmpresaDTO dto) {
         Empresa empresa = EmpresaMapper.dtoToEmpresa(dto);
 
-        Empresa salvar = empresaService.criarEmpresa(empresa);
-
-        empresa.setEndereco(enderecoServiceClient.montarEnderecoEmpresa(dto.endereco()));
+        Empresa salvar = empresaService.criarEmpresa(empresa, dto.endereco());
 
         ApiResponse<EmpresaDTO> response = new ApiResponse<>(
                 HttpStatus.CREATED.value(),
@@ -75,15 +72,15 @@ public class EmpresaController {
 
     }
 
-    @GetMapping
-    public ResponseEntity<ApiResponse<Iterable<EmpresaDTO>>> buscarTodasEmpresas() {
-        Iterable<Empresa> empresas = empresaService.buscarTodasEmpresas();
+    @GetMapping("/admin/todas")
+    // @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<ApiResponse<List<EmpresaDTO>>> buscarEmpresasComAdmin() {
 
-        Iterable<EmpresaDTO> dtoLista = StreamSupport.stream(empresas.spliterator(), false)
+        List<EmpresaDTO> dtoLista = empresaService.buscarTodasEmpresasAdmin().stream()
                 .map(EmpresaMapper::empresaToDTO)
-                .toList(); //Converte para lista
+                .toList();
 
-        ApiResponse<Iterable<EmpresaDTO>> response = new ApiResponse<>(
+        ApiResponse<List<EmpresaDTO>> response = new ApiResponse<>(
                 HttpStatus.OK.value(),
                 "Lista de empresas cadastradas com sucesso",
                 dtoLista,
@@ -92,6 +89,21 @@ public class EmpresaController {
 
         return ResponseEntity.ok(response);
 
+    }
+
+    @GetMapping("/pagina")
+    public ResponseEntity<ApiResponse<Page<EmpresaDTO>>> buscarEmpresasPaginadas(Pageable pageable) {
+        Page<EmpresaDTO> dtoPage = empresaService.buscarTodasEmpresas(pageable)
+                .map(EmpresaMapper::empresaToDTO);
+
+        ApiResponse<Page<EmpresaDTO>> response = new ApiResponse<>(
+                HttpStatus.OK.value(),
+                "Lista de empresas cadastradas com sucesso",
+                dtoPage,
+                LocalDateTime.now()
+        );
+
+        return ResponseEntity.ok(response);
     }
 
 }

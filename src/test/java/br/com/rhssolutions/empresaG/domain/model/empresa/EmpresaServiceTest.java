@@ -2,7 +2,9 @@ package br.com.rhssolutions.empresaG.domain.model.empresa;
 
 import br.com.rhssolutions.empresaG.common.EmpresaConstant;
 import br.com.rhssolutions.empresaG.domain.repository.EmpresaRepository;
+import br.com.rhssolutions.empresaG.dto.EnderecoEmpresaDTO;
 import br.com.rhssolutions.empresaG.exception.EmpresaNotFoundException;
+import br.com.rhssolutions.empresaG.service.EnderecoServiceClient;
 import br.com.rhssolutions.empresaG.service.impl.EmpresaServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -13,11 +15,12 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.StreamSupport;
 
+import static br.com.rhssolutions.empresaG.common.EmpresaConstant.CEP_VALIDO;
 import static br.com.rhssolutions.empresaG.common.EmpresaConstant.criarEmpresa;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -31,19 +34,30 @@ public class EmpresaServiceTest {
     @Mock
     private EmpresaRepository empresaRepository;
 
+    @Mock
+    private EnderecoServiceClient enderecoServiceClient;
+
     @Test
     public void criarEmpresa_comDadosValidos_retornaEmpresa() {
         //Arrange
         Empresa empresaCriada = EmpresaConstant.criarEmpresa();
+        EnderecoEmpresaDTO enderecoEmpresaDTO = EmpresaConstant.criarEnderecoEmpresaDTO();
+        EnderecoEmpresa enderecoCompleto = EmpresaConstant.criarEnderecoEmpresaCompleto();
 
         when(empresaRepository.existsByCnpj(empresaCriada.getCnpj())).thenReturn(false);
+        when(enderecoServiceClient.montarEnderecoEmpresa(enderecoEmpresaDTO))
+                .thenReturn(enderecoCompleto);
         when(empresaRepository.save(empresaCriada)).thenReturn(empresaCriada);
 
         //Act
-        Empresa sut = empresaService.criarEmpresa(empresaCriada);
+        Empresa sut = empresaService.criarEmpresa(empresaCriada, enderecoEmpresaDTO);
 
         //Assert
         assertThat(sut).isNotNull();
+        assertThat(sut.getEndereco()).isNotNull();
+        assertThat(sut.getEndereco().getRua()).isEqualTo("Rua Carlo de Falco");
+        assertThat(sut.getEndereco().getCep()).isEqualTo(CEP_VALIDO);
+
         verify(empresaRepository).existsByCnpj(empresaCriada.getCnpj());
         verify(empresaRepository).save(empresaCriada);
 
@@ -51,25 +65,34 @@ public class EmpresaServiceTest {
 
     @Test
     public void criarEmpresa_comDadosInvalidos_retornaExcecao() {
-        Empresa empresaCriada = EmpresaConstant.criarEmpresaInvalido();
+        Empresa empresaCriada = EmpresaConstant.criarEmpresa();
+        EnderecoEmpresaDTO enderecoEmpresaDTO = EmpresaConstant.criarEnderecoEmpresaDTO();
 
         when(empresaRepository.save(empresaCriada)).thenThrow(EmpresaNotFoundException.class);
 
-        assertThatThrownBy(() -> empresaService.criarEmpresa(empresaCriada))
+        assertThatThrownBy(() -> empresaService.criarEmpresa(empresaCriada, enderecoEmpresaDTO))
                 .isInstanceOf(EmpresaNotFoundException.class);
+
+        verify(empresaRepository).save(empresaCriada);
+        verify(enderecoServiceClient).montarEnderecoEmpresa(enderecoEmpresaDTO);
+        verify(empresaRepository).existsByCnpj(empresaCriada.getCnpj());
+
 
     }
 
     @Test
-    public void criarEmpresa_comDadosValidos_QuandoCNPJjaExiste() {
-        Empresa empresaCriada = EmpresaConstant.criarEmpresa();
+    void criarEmpresa_comCnpjDuplicado_retornaExcecao() {
+        Empresa empresa = EmpresaConstant.criarEmpresa();
+        EnderecoEmpresaDTO enderecoDTO = EmpresaConstant.criarEnderecoEmpresaDTO();
 
-        when(empresaRepository.existsByCnpj(empresaCriada.getCnpj())).thenReturn(true);
+        when(empresaRepository.existsByCnpj(empresa.getCnpj()))
+                .thenReturn(true);
+        EmpresaServiceImpl sut = new EmpresaServiceImpl(empresaRepository, enderecoServiceClient);
 
-        assertThatThrownBy(() -> empresaService.criarEmpresa(empresaCriada))
-                .isInstanceOf(EmpresaNotFoundException.class)
-                .hasMessage("Empresa já existe com este CNPJ");
+        assertThrows(EmpresaNotFoundException.class,
+                () -> sut.criarEmpresa(empresa, enderecoDTO));
     }
+
 
     @Test
     public void buscarEmpresaPorId_comIdValido_retornaEmpresa() {
@@ -96,16 +119,12 @@ public class EmpresaServiceTest {
 
         when(empresaRepository.findAll()).thenReturn(empresas);
 
+        List<Empresa> sut = empresaService.buscarTodasEmpresasAdmin();
 
-        Iterable<Empresa> sut = empresaService.buscarTodasEmpresas();
-        //Conversão de iterable para List
-        List<Empresa> listaEmpresas = StreamSupport.stream(sut.spliterator(),
-                false).toList();
-
-        assertThat(listaEmpresas).isNotEmpty()
+        assertThat(sut).isNotEmpty()
                 .hasSize(1)
                 .isEqualTo(empresas)
-                .containsExactlyElementsOf(empresas); //
+                .containsExactlyElementsOf(empresas);
 
         verify(empresaRepository).findAll();
     }
@@ -114,7 +133,7 @@ public class EmpresaServiceTest {
     public void buscarTodasEmpresas_quandoNaoExistemEmpresas_lancaExcecao() {
         when(empresaRepository.findAll()).thenReturn(Collections.emptyList());
 
-        assertThatThrownBy(() -> empresaService.buscarTodasEmpresas()
+        assertThatThrownBy(() -> empresaService.buscarTodasEmpresasAdmin()
         ).isInstanceOf(EmpresaNotFoundException.class)
                 .hasMessage("Não há empresas cadastradas");
     }
