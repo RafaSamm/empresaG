@@ -40,7 +40,7 @@ public class EmpresaServiceImpl implements EmpresaService {
 
     @Override
     public Empresa buscarEmpresaPorId(Long id) {
-        return empresaRepository.findById(id).orElseThrow(() ->
+        return empresaRepository.buscarEmpresaCompleta(id).orElseThrow(() ->
                 new EmpresaNotFoundException("Empresa não encontrada"));
     }
 
