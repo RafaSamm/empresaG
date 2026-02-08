@@ -53,7 +53,8 @@ public class EmpresaServiceImpl implements EmpresaService {
 
     @Override
     public List<Empresa> buscarTodasEmpresasAdmin() {
-        List<Empresa> empresas = empresaRepository.findById(1L).stream().toList();
+        List<Empresa> empresas = empresaRepository.buscarTodasAdmin();
+
         if (empresas.isEmpty()) {
             throw new EmpresaNotFoundException("Não há empresas cadastradas");
         }
@@ -62,7 +63,7 @@ public class EmpresaServiceImpl implements EmpresaService {
 
     @Override
     public Page<Empresa> buscarTodasEmpresas(Pageable pageable) {
-        Page<Empresa> empresasPage = empresaRepository.findAll(pageable);
+        Page<Empresa> empresasPage = empresaRepository.buscarTodasPorPage(pageable);
 
         if (empresasPage.isEmpty())
             throw new EmpresaNotFoundException("Não há empresas cadastradas");
