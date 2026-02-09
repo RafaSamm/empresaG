@@ -58,19 +58,24 @@ https://empresag-api.onrender.com/swagger-ui/index.html
 ```
 ### Principais endpoints
 **Empresa**
-- `GET /empresa` — lista todas as empresas
+- `GET /empresa/admin/todas` — lista todas as empresas em modo administrador (em atualização futura)
+- `GET /empresa/pagina` - lista todas as empresas por paginação (eficiência)
 - `GET /empresa/{id}` — busca por ID
 - `POST /empresa/criar` — cria nova empresa
 - `DELETE /empresa/{id}` — remove empresa
 
 **Departamento**
-- `GET /departamentos`
-- `POST /departamentos`
+- `GET /departamento/{id}` - buscar por ID
+- `POST /departamento/criar/empresa/{empresaId}` - cria novo departamento em uma empresa já criada
+- `PUT /departamento/atualizar/{id}` - atualiza o departamento
+- `DELETE /departamento/{id}` - deleta departamento
 
 
 **Funcionário**
-- `GET /funcionarios`
-- `POST /funcionarios`
+- `GET /funcionario/{id}` - buscar por ID
+- `POST /funcionario/cadastrar/empresa/{empresaId}` - cria novo funcionário em uma empresa já criada
+- `PUT /funcionario/atualizar/{id}` - atualiza o funcionário da empresa
+- `DELETE /funcionario/{id}` - deleta funcionário
 
 
 ## 🧪 Testes
