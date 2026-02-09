@@ -88,7 +88,7 @@ Execute a suíte de testes (unitários e integração):
 Arquivos de propriedades disponíveis:
 - `application.properties` — configuração padrão (local)
 - `application-dev.properties` — configuração para execução de testes
-- `application-prod.properties` — exemplo para produção
+- `application-prod.properties` — configuração para produção
   
 Por padrão, a aplicação pode usar H2 em memória para facilitar desenvolvimento e testes.
 
