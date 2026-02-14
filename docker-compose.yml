@@ -25,7 +25,7 @@ services:
       - "8082:8080"
     environment:
        SPRING_PROFILES_ACTIVE: prod
-       SPRING_DATASOURCE_URL: jdbc:postgresql://postgresdb:5432/empresaG_db
+       SPRING_DATASOURCE_URL: jdbc:postgresql://postgresdb:5432/empresaG_db?sslmode=disable
        SPRING_DATASOURCE_USERNAME: dev
        SPRING_DATASOURCE_PASSWORD: 2121
 
