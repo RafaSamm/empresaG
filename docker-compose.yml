@@ -1,36 +1,36 @@
 services:
-  postgresdb:
-    image:
-      postgres:16
-    container_name: postgres-empresag
+  mysqldb:
+    image: mysql:8.3
+    container_name: mysql-empresaG
     restart: unless-stopped
     environment:
-       POSTGRES_DB: empresaG_db
-       POSTGRES_USER: dev
-       POSTGRES_PASSWORD: 2121
-
+      MYSQL_DATABASE: empresaG_db
+      MYSQL_USER: developer
+      MYSQL_PASSWORD: 1212
+      MYSQL_ROOT_PASSWORD: rootpassword
     ports:
-      - "5433:5432"
+      - "3308:3306"
     volumes:
-      - postgres_data:/var/lib/postgresql/data
-      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+        - mysql_data:/var/lib/mysql
+        - ./init.sql:/docker-entrypoint-initdb.d/init.sql #  Monta o arquivo init.sql
 
-  empresagapi:
+  empresaG:
     build: .
-    container_name: empresag-api
-    restart: unless-stopped
+    container_name: empresaG
+    restart: unless-stopped # Reinicia o container automaticamente
     depends_on:
-      - postgresdb
+      - mysqldb
     ports:
-      - "8082:8080"
+      - "8082:8080" # Mapeia a porta 8080 do container para a porta 8082 do PC
     environment:
-       SPRING_PROFILES_ACTIVE: prod
-       SPRING_DATASOURCE_URL: jdbc:postgresql://postgresdb:5432/empresaG_db?sslmode=require
-       SPRING_DATASOURCE_USERNAME: dev
-       SPRING_DATASOURCE_PASSWORD: 2121
+        SPRING_DATASOURCE_URL: jdbc:mysql://mysqldb:3306/empresaG_db?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+        SPRING_DATASOURCE_USERNAME: developer
+        SPRING_DATASOURCE_PASSWORD: 1212
 
 volumes:
-  postgres_data:
+  mysql_data:   # Volume declarado aqui
+
+
 
 
 
